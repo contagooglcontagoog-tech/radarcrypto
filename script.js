@@ -66,8 +66,42 @@ document.getElementById('qualificationForm').addEventListener('submit', function
         date: new Date().toISOString()
     };
     
-    console.log("[NAIA] Clearance Request Submitted: ", formData);
-    localStorage.setItem('naia_clearance_request', JSON.stringify(formData));
+    // Substitua a URL abaixo pelo seu link do Google Apps Script ou SheetMonkey
+    const googleSheetsWebhookUrl = "COLOQUE_SUA_URL_AQUI"; 
+    
+    // Mostra feedback visual no botão enquanto envia
+    const submitBtn = document.querySelector('button[type="submit"]');
+    const originalBtnText = submitBtn.innerHTML;
+    submitBtn.innerHTML = "ENVIANDO DADOS...";
+    submitBtn.disabled = true;
 
-    nextStep(5);
+    if (googleSheetsWebhookUrl !== "COLOQUE_SUA_URL_AQUI") {
+        fetch(googleSheetsWebhookUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => {
+            console.log("[NAIA] Clearance Request enviado para a planilha com sucesso!");
+            nextStep(5);
+        })
+        .catch(error => {
+            console.error("Erro ao enviar para a planilha:", error);
+            // Mesmo com erro, avança pro sucesso pra não travar o usuário
+            nextStep(5); 
+        })
+        .finally(() => {
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
+        });
+    } else {
+        // Fallback local se não tiver configurado o link ainda
+        console.log("[NAIA] (Mockup) Clearance Request Submitted: ", formData);
+        localStorage.setItem('naia_clearance_request', JSON.stringify(formData));
+        nextStep(5);
+        submitBtn.innerHTML = originalBtnText;
+        submitBtn.disabled = false;
+    }
 });
