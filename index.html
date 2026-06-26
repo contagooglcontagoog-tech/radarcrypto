@@ -895,16 +895,23 @@ function sendAbandonmentAlert() {
   
   const stepInfo = cur === 0 ? "Início (S0)" : "Passo " + cur + " de " + TOTAL_STEPS;
   
-  const tgMsg = `⚠️ *LEAD ABANDONOU O FUNIL* ⚠️\n\n` +
-                `👤 *Nome:* ${form.nome}\n` +
-                `🛑 *Parou no:* ${stepInfo}\n\n` +
-                `📱 *WhatsApp:* ${form.contato || 'Não preencheu'}\n` +
-                `📱 *Dispositivo:* ${form.dispositivo || 'Não preencheu'}\n` +
-                `🏦 *Binance:* ${form.binance || 'Não preencheu'}\n` +
-                `📊 *Experiência:* ${form.experiencia || 'Não preencheu'}\n` +
-                `🎯 *Objetivo:* ${form.objetivo || 'Não preencheu'}\n` +
-                `💰 *Capital:* ${form.capital || 'Não preencheu'}\n` +
-                `🎁 *Motivo:* ${form.motivo || 'Não preencheu'}`;
+  // Monta a mensagem dinamicamente só com o que foi preenchido
+  let tgMsg = `⚠️ *LEAD ABANDONOU O FUNIL* ⚠️\n\n` +
+              `👤 *Nome:* ${form.nome}\n` +
+              `🛑 *Parou no:* ${stepInfo}\n\n`;
+              
+  let discordFields = [
+    { name: "👤 Nome", value: form.nome, inline: true },
+    { name: "🛑 Parou no", value: stepInfo, inline: true }
+  ];
+
+  if (form.contato) { tgMsg += `📱 *WhatsApp:* ${form.contato}\n`; discordFields.push({ name: "📱 WhatsApp", value: form.contato, inline: true }); }
+  if (form.dispositivo) { tgMsg += `📱 *Dispositivo:* ${form.dispositivo}\n`; discordFields.push({ name: "📱 Dispositivo", value: form.dispositivo, inline: true }); }
+  if (form.binance) { tgMsg += `🏦 *Binance:* ${form.binance}\n`; discordFields.push({ name: "🏦 Possui Binance", value: form.binance, inline: true }); }
+  if (form.capital) { tgMsg += `💰 *Capital:* ${form.capital}\n`; discordFields.push({ name: "💰 Capital Inicial", value: form.capital, inline: true }); }
+  if (form.experiencia) { tgMsg += `📊 *Experiência:* ${form.experiencia}\n`; discordFields.push({ name: "📊 Experiência", value: form.experiencia }); }
+  if (form.objetivo) { tgMsg += `🎯 *Objetivo:* ${form.objetivo}\n`; discordFields.push({ name: "🎯 Objetivo", value: form.objetivo }); }
+  if (form.motivo) { tgMsg += `🎁 *Motivo:* ${form.motivo}\n`; discordFields.push({ name: "🎁 Motivo", value: form.motivo }); }
                 
   fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
       method: 'POST',
@@ -916,18 +923,9 @@ function sendAbandonmentAlert() {
   const discordPayload = {
     embeds: [{
       title: "⚠️ LEAD ABANDONOU O FUNIL",
-      description: "O usuário saiu da página na etapa: **" + stepInfo + "**.",
+      description: "O usuário saiu da página no meio da jornada.",
       color: 16734003, // Laranja/Vermelho para alerta
-      fields: [
-        { name: "👤 Nome", value: form.nome, inline: true },
-        { name: "📱 WhatsApp", value: form.contato || 'Não preencheu', inline: true },
-        { name: "📱 Dispositivo", value: form.dispositivo || 'Não preencheu', inline: true },
-        { name: "🏦 Possui Binance", value: form.binance || 'Não preencheu', inline: true },
-        { name: "💰 Capital Inicial", value: form.capital || 'Não preencheu', inline: true },
-        { name: "📊 Experiência", value: form.experiencia || 'Não preencheu' },
-        { name: "🎯 Objetivo", value: form.objetivo || 'Não preencheu' },
-        { name: "🎁 Motivo", value: form.motivo || 'Não preencheu' }
-      ]
+      fields: discordFields
     }]
   };
   
