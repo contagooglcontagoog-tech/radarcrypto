@@ -368,7 +368,7 @@
       </svg>
       NAIA Protocol
     </div>
-    <div id="step-lbl">Passo <b id="step-now">1</b> de 9</div>
+    <div id="step-lbl">Passo <b id="step-now">1</b> de 10</div>
   </div>
   <div id="prog-track"><div id="prog-fill"></div></div>
 </div>
@@ -595,23 +595,50 @@
     </div>
   </div>
 
-  <!-- ══════════ TELA 9 — WHATSAPP ══════════ -->
+  <!-- ══════════ TELA 9 — OPORTUNIDADE GRATUITA ══════════ -->
   <div id="s9" class="scr">
+    <div class="inner">
+      <div class="stg">
+        <div class="form-label" style="font-size:24px; color:#00FF94; margin-bottom:12px;">Sua chance de operar 100% de Graça!</div>
+        <div class="exp-card" style="margin-bottom: 20px;">
+          <div class="exp-tag">Acesso Beta Limitado</div>
+          <p>
+            No momento, estamos selecionando um pequeno grupo para rodar o NAIA <strong>sem cobrar nenhuma mensalidade ou taxa</strong>. 
+            Queremos casos de sucesso reais para documentar na Solana.
+          </p>
+        </div>
+      </div>
+      <div class="stg" style="transition-delay:.08s;">
+        <div class="form-label">Por que VOCÊ deveria ser escolhido?</div>
+        <div class="form-sub">Me conte o seu motivo real para receber esse acesso de graça hoje.</div>
+        <textarea id="f-motivo" class="txt-input" style="height:120px; resize:none; padding-top:12px;" placeholder="Sua resposta aqui..." oninput="checkStep9()"></textarea>
+      </div>
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn9" class="btn-blue" onclick="goStep(10)" disabled>
+          ENVIAR MOTIVO
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 10 — WHATSAPP ══════════ -->
+  <div id="s10" class="scr">
     <div class="inner">
       <div class="exp-card stg">
         <div class="exp-tag">Última etapa</div>
         <p>
-          O seu perfil foi mapeado. O nosso suporte (Professor Rafael ou Amanda) vai entrar em contato com você <strong>pessoalmente no WhatsApp</strong>
-          para validar seus dados, mostrar a máquina ao vivo e fazer a conexão caso aprovado.
+          O seu perfil e o seu motivo foram enviados. O nosso suporte (Professor Rafael ou Amanda) vai te chamar <strong>pessoalmente no WhatsApp</strong>
+          para informar se você foi um dos selecionados para usar o robô de graça.
         </p>
       </div>
       <div class="stg" style="transition-delay:.08s;">
         <div class="form-label">Qual é o seu WhatsApp?</div>
         <div class="form-sub">Informe com DDD. Ex: 11999999999</div>
-        <input id="f-wa" class="txt-input" type="tel" placeholder="Seu WhatsApp" autocomplete="off" oninput="checkStep9()"/>
+        <input id="f-wa" class="txt-input" type="tel" placeholder="Seu WhatsApp" autocomplete="off" oninput="checkStep10()"/>
       </div>
       <div class="stg" style="transition-delay:.14s;">
-        <button id="btn9" class="btn-blue" onclick="goFinal()" disabled>
+        <button id="btn10" class="btn-blue" onclick="goFinal()" disabled>
           FINALIZAR E ENVIAR DADOS
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -657,12 +684,12 @@
 </div>
 
 <script>
-const form = { nome:'', experiencia:'', dispositivo:'', binance:'', objetivo:'', capital:'', contato:'' };
+const form = { nome:'', experiencia:'', dispositivo:'', binance:'', objetivo:'', capital:'', motivo:'', contato:'' };
 let cur = 0;
 
-// Agora são 9 passos antes do final
-const STEPS = [null,'s1','s2','s3','s4','s5','s6','s7','s8','s9'];
-const TOTAL_STEPS = 9;
+// Agora são 10 passos antes do final
+const STEPS = [null,'s1','s2','s3','s4','s5','s6','s7','s8','s9','s10'];
+const TOTAL_STEPS = 10;
 
 function updateProg(n) {
   const pct = (n / TOTAL_STEPS) * 100;
@@ -695,7 +722,8 @@ function goStep(n) {
     }, 60);
 
     if (n === 1) setTimeout(() => document.getElementById('f-nome')?.focus(), 400);
-    if (n === 9) setTimeout(() => document.getElementById('f-wa')?.focus(), 400);
+    if (n === 9) setTimeout(() => document.getElementById('f-motivo')?.focus(), 400);
+    if (n === 10) setTimeout(() => document.getElementById('f-wa')?.focus(), 400);
   }, 280);
 }
 
@@ -725,22 +753,30 @@ function checkStep1() {
 }
 
 function checkStep9() {
+  const v = document.getElementById('f-motivo').value.trim();
+  form.motivo = v;
+  document.getElementById('btn9').disabled = v.length < 10; // Mínimo 10 caracteres
+}
+
+function checkStep10() {
   const v = document.getElementById('f-wa').value.trim();
   form.contato = v;
-  document.getElementById('btn9').disabled = v.length < 8; // Mínimo pra número de telefone com DDD
+  document.getElementById('btn10').disabled = v.length < 8; // Mínimo pra número de telefone com DDD
 }
 
 function goFinal() {
   form.nome    = document.getElementById('f-nome').value.trim();
+  form.motivo  = document.getElementById('f-motivo').value.trim();
   form.contato = document.getElementById('f-wa').value.trim();
 
   // ENVIO PARA O TELEGRAM
   const telegramBotToken = "8607846534:AAHxMCKNINP9xC-2qH34l0uCOrKMYW3oz4k"; 
   const telegramChatId = "8282567726";
   
-  const message = `🚨 *NOVA APLICAÇÃO NAIA (FUNIL EXPANDIDO)* 🚨\n\n` +
+  const message = `🚨 *NOVA APLICAÇÃO NAIA (BETA 100% GRÁTIS)* 🚨\n\n` +
                   `👤 *Operador:* ${form.nome}\n` +
-                  `📱 *WhatsApp:* ${form.contato}\n` +
+                  `📱 *WhatsApp:* ${form.contato}\n\n` +
+                  `🎁 *Defesa (Por que merece a vaga):*\n"${form.motivo}"\n\n` +
                   `📱 *Dispositivo:* ${form.dispositivo}\n` +
                   `🏦 *Binance:* ${form.binance}\n` +
                   `📊 *Experiência:* ${form.experiencia}\n` +
@@ -758,7 +794,7 @@ function goFinal() {
   }).catch(e => console.error("Erro no Telegram:", e));
 
   // TRANSIÇÃO DE TELA
-  const fEl = document.getElementById('s9');
+  const fEl = document.getElementById('s10');
   const tEl = document.getElementById('sf');
 
   fEl.classList.add('slide-out');
