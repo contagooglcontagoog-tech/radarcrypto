@@ -68,7 +68,7 @@ document.getElementById('qualificationForm').addEventListener('submit', function
     
     // Configurações do Telegram (Substitua pelos seus dados)
     const telegramBotToken = "8607846534:AAHxMCKNINP9xC-2qH34l0uCOrKMYW3oz4k"; 
-    const telegramChatId = "SEU_CHAT_ID_AQUI";
+    const telegramChatId = "8282567726";
     
     // Mostra feedback visual no botão enquanto envia
     const submitBtn = document.querySelector('button[type="submit"]');
