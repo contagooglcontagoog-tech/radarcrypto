@@ -66,8 +66,9 @@ document.getElementById('qualificationForm').addEventListener('submit', function
         date: new Date().toISOString()
     };
     
-    // Substitua a URL abaixo pelo seu link do Google Apps Script ou SheetMonkey
-    const googleSheetsWebhookUrl = "COLOQUE_SUA_URL_AQUI"; 
+    // Configurações do Telegram (Substitua pelos seus dados)
+    const telegramBotToken = "SEU_TOKEN_AQUI"; 
+    const telegramChatId = "SEU_CHAT_ID_AQUI";
     
     // Mostra feedback visual no botão enquanto envia
     const submitBtn = document.querySelector('button[type="submit"]');
@@ -75,20 +76,34 @@ document.getElementById('qualificationForm').addEventListener('submit', function
     submitBtn.innerHTML = "ENVIANDO DADOS...";
     submitBtn.disabled = true;
 
-    if (googleSheetsWebhookUrl !== "COLOQUE_SUA_URL_AQUI") {
-        fetch(googleSheetsWebhookUrl, {
+    if (telegramBotToken !== "SEU_TOKEN_AQUI" && telegramChatId !== "SEU_CHAT_ID_AQUI") {
+        
+        // Formata a mensagem que vai chegar no seu Telegram
+        const message = `🚨 *NOVA APLICAÇÃO NAIA* 🚨\n\n` +
+                        `👤 *Operador:* ${name}\n` +
+                        `📱 *WhatsApp:* ${whatsapp}\n` +
+                        `📊 *Experiência:* ${experience}\n` +
+                        `💬 *Motivo:* ${motivation}`;
+
+        const telegramUrl = `https://api.telegram.org/bot${telegramBotToken}/sendMessage`;
+
+        fetch(telegramUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formData)
+            body: JSON.stringify({
+                chat_id: telegramChatId,
+                text: message,
+                parse_mode: 'Markdown'
+            })
         })
         .then(response => {
-            console.log("[NAIA] Clearance Request enviado para a planilha com sucesso!");
+            console.log("[NAIA] Clearance Request enviado para o Telegram com sucesso!");
             nextStep(5);
         })
         .catch(error => {
-            console.error("Erro ao enviar para a planilha:", error);
+            console.error("Erro ao enviar para o Telegram:", error);
             // Mesmo com erro, avança pro sucesso pra não travar o usuário
             nextStep(5); 
         })
@@ -97,7 +112,7 @@ document.getElementById('qualificationForm').addEventListener('submit', function
             submitBtn.disabled = false;
         });
     } else {
-        // Fallback local se não tiver configurado o link ainda
+        // Fallback local se não tiver configurado o bot ainda
         console.log("[NAIA] (Mockup) Clearance Request Submitted: ", formData);
         localStorage.setItem('naia_clearance_request', JSON.stringify(formData));
         nextStep(5);
