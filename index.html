@@ -1,193 +1,830 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAIA — Protocol Initiation</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>NAIA — Verificação de Perfil</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #03071E;
+      --primary: #0057FF;
+      --accent: #00B4FF;
+      --success: #00FF94;
+      --text: #FFFFFF;
+      --muted: rgba(255,255,255,0.48);
+      --glass: rgba(255,255,255,0.04);
+      --gb: rgba(255,255,255,0.08);
+      --bgl: rgba(0,87,255,0.08);
+      --bglb: rgba(0,87,255,0.2);
+    }
+
+    html, body {
+      background: var(--bg);
+      font-family: 'Poppins', sans-serif;
+      color: var(--text);
+      min-height: 100dvh;
+      overflow-x: hidden;
+    }
+
+    #cv {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Header progress ── */
+    #hdr {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 40;
+      padding: 11px 20px 13px;
+      background: rgba(3,7,30,0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gb);
+    }
+    #hdr-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+    #step-lbl {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    #step-lbl b { color: var(--text); }
+    #prog-track {
+      height: 4px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    #prog-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 99px;
+      box-shadow: 0 0 10px rgba(0,180,255,0.45);
+      transition: width 0.6s cubic-bezier(.4,0,.2,1);
+    }
+
+    /* ── App ── */
+    #app {
+      position: relative;
+      z-index: 10;
+      min-height: 100dvh;
+    }
+
+    /* ── Screens ── */
+    .scr {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100dvh;
+      padding: 80px 20px 52px;
+    }
+    .scr.active { display: flex; }
+    .inner {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ── Slide animation ── */
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(40px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideOut {
+      from { opacity: 1; transform: translateX(0); }
+      to   { opacity: 0; transform: translateX(-40px); }
+    }
+    .slide-in  { animation: slideIn  0.34s ease forwards; }
+    .slide-out { animation: slideOut 0.28s ease forwards; }
+
+    /* ── Explanation card ── */
+    .exp-card {
+      background: var(--bgl);
+      border: 1px solid var(--bglb);
+      border-radius: 16px;
+      padding: 20px;
+    }
+    .exp-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .exp-tag::before {
+      content: '';
+      display: block;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 6px var(--accent);
+    }
+    .exp-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.65;
+    }
+    .exp-card p strong { color: #fff; font-weight: 600; }
+    .exp-stat {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .exp-stat-item {
+      flex: 1;
+      background: rgba(0,0,0,0.22);
+      border-radius: 10px;
+      padding: 10px 8px;
+      text-align: center;
+    }
+    .exp-stat-item .val {
+      font-size: 17px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 3px;
+    }
+    .exp-stat-item .lbl {
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    /* ── Form label ── */
+    .form-label {
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+    .form-sub {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* ── Text input ── */
+    .txt-input {
+      width: 100%;
+      background: var(--glass);
+      border: 1px solid var(--gb);
+      border-radius: 13px;
+      padding: 16px 18px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: #fff;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      min-height: 54px;
+    }
+    .txt-input::placeholder { color: rgba(255,255,255,0.28); }
+    .txt-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0,180,255,0.12);
+    }
+
+    /* ── Option cards ── */
+    .opts { display: flex; flex-direction: column; gap: 9px; }
+    .opt {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      width: 100%;
+      min-height: 56px;
+      padding: 13px 18px;
+      background: var(--glass);
+      border: 1.5px solid var(--gb);
+      border-radius: 13px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      text-align: left;
+      transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.12s;
+    }
+    .opt:hover { background: var(--bgl); border-color: var(--primary); }
+    .opt:active { transform: scale(0.98); }
+    .opt.sel {
+      background: rgba(0,180,255,0.1);
+      border-color: var(--accent);
+      box-shadow: 0 0 18px rgba(0,180,255,0.15);
+    }
+    .opt-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+      transition: all 0.18s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .opt.sel .opt-dot {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .opt.sel .opt-dot::after {
+      content: '';
+      display: block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #fff;
+    }
+
+    /* ── Buttons ── */
+    .btn-blue {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      min-height: 54px;
+      border: none;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      box-shadow: 0 0 26px rgba(0,87,255,0.42);
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    }
+    .btn-blue:hover { box-shadow: 0 0 38px rgba(0,87,255,0.6); }
+    .btn-blue:active { transform: scale(0.97); }
+    .btn-blue:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+    .btn-ig {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 60px;
+      border: none;
+      border-radius: 13px;
+      background: linear-gradient(135deg, #833AB4, #E1306C, #F77737);
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 0 28px rgba(225,48,108,0.35);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+    .btn-ig:hover { box-shadow: 0 0 44px rgba(225,48,108,0.55); }
+    .btn-ig:active { transform: scale(0.97); }
+
+    /* ── Summary card ── */
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 11px 0;
+      border-bottom: 1px solid var(--gb);
+      font-size: 13px;
+    }
+    .summary-row:last-child { border-bottom: none; }
+    .summary-row .key { color: var(--muted); font-size: 12px; }
+    .summary-row .val { font-weight: 600; font-size: 14px; max-width: 60%; text-align: right; }
+
+    /* ── Confetti ── */
+    .cf {
+      position: fixed;
+      pointer-events: none;
+      z-index: 200;
+      animation: cf-fall linear forwards;
+    }
+    @keyframes cf-fall {
+      0%   { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+    }
+
+    /* ── Scan anim for intro ── */
+    @keyframes scan { 0%{top:0} 100%{top:100%} }
+    .scan { position:absolute; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent),transparent); animation:scan 2.2s linear infinite; }
+    @keyframes ring-p { 0%,100%{opacity:.3;transform:scale(1)} 50%{opacity:.6;transform:scale(1.06)} }
+
+    /* ── Stagger ── */
+    .stg { opacity:0; transform:translateY(14px); transition:opacity .4s ease, transform .4s ease; }
+    .stg.vis { opacity:1; transform:translateY(0); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+    }
+  </style>
 </head>
 <body>
-    
-    <nav>
-        <div class="nav-logo">NAIA<span style="font-weight: 300; opacity: 0.7; font-size: 1rem; margin-left: 10px;">NEURAL AI SCALPER</span></div>
-        <div class="nav-status">
-            <div class="live-dot"></div>
-            SYSTEM ONLINE
-        </div>
-    </nav>
 
-    <div class="app-container">
-        
-        <div class="progress-wrapper">
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-            <div class="progress-text" id="progressText">CLEARANCE: 0%</div>
-        </div>
+<canvas id="cv"></canvas>
+<div class="orb" style="width:400px;height:400px;background:#0057FF;top:-100px;left:-120px;opacity:.22;"></div>
+<div class="orb" style="width:300px;height:300px;background:#00B4FF;bottom:5%;right:-80px;opacity:.18;"></div>
+<div class="orb" style="width:220px;height:220px;background:#00FF94;top:45%;left:55%;opacity:.08;"></div>
 
-        <main class="content-area" id="contentArea">
-            
-            <!-- STEP 0: INTRO -->
-            <section class="step active" id="step-0">
-                <div class="step-eyebrow">
-                    <div class="line"></div>
-                    PROTOCOL INITIATION
-                </div>
-                <h1 class="title">Restricted <em>Access</em></h1>
-                <div class="card">
-                    <p>O <strong>Neural AI Scalper (NAIA)</strong> não é um utilitário público. É uma infraestrutura de grau institucional desenvolvida para arbitragem on-chain de memecoins na rede Solana.</p>
-                    <p>Muitos buscam acesso à nossa máquina de execução automática. No entanto, a capacidade de implantação é limitada e restrita a operadores que compreendem a arquitetura fundamental do sistema.</p>
-                    <p>Antes de autorizarmos a conexão da sua carteira, você deve passar pelo protocolo de verificação estrutural (3 módulos). Prossiga com atenção.</p>
-                </div>
-                <button class="btn-primary" onclick="nextStep(1)">
-                    INICIAR PROTOCOLO
-                </button>
-            </section>
-
-            <!-- STEP 1: BINANCE -->
-            <section class="step" id="step-1">
-                <div class="step-eyebrow">
-                    <div class="line"></div>
-                    MODULE I
-                </div>
-                <h1 class="title">Capital <em>Entry</em></h1>
-                <div class="card">
-                    <h3>A Função da Corretora</h3>
-                    <p>O sistema requer liquidez bruta. Utilizamos plataformas centralizadas, como a <strong>Binance</strong>, exclusivamente como ponte (fiat on-ramp). É onde o capital BRL é convertido em SOL.</p>
-                    <p>O NAIA <strong>não opera</strong> dentro da Binance. O capital deve ser imediatamente extraído para um ambiente descentralizado após a conversão.</p>
-                    
-                    <div class="quiz-box">
-                        <p class="quiz-question">Qual é o papel da Binance na infraestrutura do NAIA?</p>
-                        <div class="quiz-options">
-                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(1, false, this)">Armazenar os lucros do robô a longo prazo.</button>
-                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(1, true, this)">Atuar apenas como ponte para converter moeda fiduciária em SOL.</button>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-primary btn-hidden" id="btn-next-1" onclick="nextStep(2)">
-                    PROSSEGUIR PARA MODULE II
-                </button>
-            </section>
-
-            <!-- STEP 2: TRUST WALLET -->
-            <section class="step" id="step-2">
-                <div class="step-eyebrow">
-                    <div class="line"></div>
-                    MODULE II
-                </div>
-                <h1 class="title">Sovereign <em>Custody</em></h1>
-                <div class="card">
-                    <h3>Autocustódia Absoluta</h3>
-                    <p>O NAIA opera em um modelo estritamente não-custodial (DeFi). A execução algorítmica ocorre on-chain, e você mantém controle absoluto de suas chaves privadas através da <strong>Trust Wallet</strong>.</p>
-                    <p>O bot conecta-se à sua carteira via smart contracts. Todo o lucro das operações de scalping é roteado e liquidado diretamente no seu saldo local, sem intermediários humanos.</p>
-                    
-                    <div class="quiz-box">
-                        <p class="quiz-question">Onde os lucros das operações do bot são armazenados?</p>
-                        <div class="quiz-options">
-                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(2, true, this)">Diretamente na minha Trust Wallet, sob meu controle.</button>
-                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(2, false, this)">Na conta da equipe de desenvolvimento do NAIA.</button>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-primary btn-hidden" id="btn-next-2" onclick="nextStep(3)">
-                    PROSSEGUIR PARA MODULE III
-                </button>
-            </section>
-
-            <!-- STEP 3: SOLANA -->
-            <section class="step" id="step-3">
-                <div class="step-eyebrow">
-                    <div class="line"></div>
-                    MODULE III
-                </div>
-                <h1 class="title">Network <em>Infrastructure</em></h1>
-                <div class="card">
-                    <h3>Velocidade e Execução</h3>
-                    <p>No mercado de memecoins, milissegundos definem o lucro. O NAIA não opera em Bitcoin ou Ethereum devido ao gargalo de rede.</p>
-                    <p>Nossa arquitetura roda sobre a blockchain da <strong>Solana</strong>. A finalidade de blocos em frações de segundos e taxas microscópicas permitem que o bot faça front-running e execute micro-arbitragens centenas de vezes por hora com eficiência máxima.</p>
-                    
-                    <div class="quiz-box">
-                        <p class="quiz-question">Por que a infraestrutura do NAIA é baseada na Solana?</p>
-                        <div class="quiz-options">
-                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(3, false, this)">Por ser a rede mais antiga e tradicional do mercado.</button>
-                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(3, true, this)">Para explorar a altíssima velocidade de transação e taxas mínimas.</button>
-                        </div>
-                    </div>
-                </div>
-                <button class="btn-primary btn-hidden" id="btn-next-3" onclick="nextStep(4)">
-                    SOLICITAR CLEARANCE FINAL
-                </button>
-            </section>
-
-            <!-- STEP 4: FORMULÁRIO -->
-            <section class="step" id="step-4">
-                <div class="step-eyebrow">
-                    <div class="line"></div>
-                    FINAL CLEARANCE
-                </div>
-                <h1 class="title">Profile <em>Analysis</em></h1>
-                <div class="card">
-                    <p>Sua compreensão estrutural foi validada. Preencha o formulário de requisição de acesso. Nossa equipe de operações analisará a viabilidade de alocar recursos para o seu nó.</p>
-                
-                    <form id="qualificationForm" class="qualification-form">
-                        <div class="form-group">
-                            <label>OPERATOR NAME</label>
-                            <input type="text" id="name" required placeholder="Nome completo">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>CONTACT NODE (WHATSAPP)</label>
-                            <input type="tel" id="whatsapp" required placeholder="Ex: 11999999999">
-                        </div>
-
-                        <div class="form-group">
-                            <label>ON-CHAIN EXPERIENCE</label>
-                            <select id="experience" required>
-                                <option value="">Select clearance level...</option>
-                                <option value="iniciante">Level 1 - Nenhum contato prévio</option>
-                                <option value="intermediario">Level 2 - Operações básicas em corretoras</option>
-                                <option value="avancado">Level 3 - Autocustódia (Trust Wallet/Phantom)</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>AUTHORIZATION RATIONALE</label>
-                            <textarea id="motivation" rows="3" required placeholder="Por que o protocolo NAIA deve liberar o acesso ao seu nó?"></textarea>
-                        </div>
-
-                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">
-                            SUBMIT CLEARANCE REQUEST
-                        </button>
-                    </form>
-                </div>
-            </section>
-
-            <!-- STEP 5: SUCESSO -->
-            <section class="step" id="step-5">
-                <div class="step-eyebrow" style="color: var(--green);">
-                    <div class="line" style="background: var(--green);"></div>
-                    REQUEST RECEIVED
-                </div>
-                <h1 class="title" style="color: var(--text);">Status: <em style="color: var(--gold);">Pending Validation</em></h1>
-                <div class="card" style="text-align: center; padding: 60px 40px;">
-                    <div class="status-icon" style="margin-bottom: 24px;">
-                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                        </svg>
-                    </div>
-                    <p>Sua solicitação foi injetada no sistema.</p>
-                    <p style="margin-top: 20px;">O <strong>Professor Rafael</strong> ou a <strong>Amanda</strong> do suporte operacional da NAIA farão a análise técnica. Caso sua chave de acesso seja aprovada, você receberá instruções diretas pelo canal fornecido (WhatsApp).</p>
-                    <p style="margin-top: 30px; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase;">Mantenha suas comunicações abertas.</p>
-                </div>
-            </section>
-
-        </main>
+<!-- Header -->
+<div id="hdr">
+  <div id="hdr-row">
+    <div class="logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <polygon points="12,3 22,19 2,19" fill="none" stroke="#00B4FF" stroke-width="1.6"/>
+        <circle cx="12" cy="14" r="2" fill="#00B4FF"/>
+      </svg>
+      NAIA Protocol
     </div>
+    <div id="step-lbl">Passo <b id="step-now">1</b> de 5</div>
+  </div>
+  <div id="prog-track"><div id="prog-fill"></div></div>
+</div>
 
-    <script src="script.js"></script>
+<div id="app">
+
+  <!-- ══════════ TELA 0 — INTRO ══════════ -->
+  <div id="s0" class="scr active">
+    <div class="inner" style="align-items:center;text-align:center;justify-content:center;min-height:calc(100dvh - 60px);">
+
+      <div style="position:relative;width:80px;height:80px;margin:0 auto;">
+        <div style="position:absolute;inset:-6px;border-radius:50%;border:1px solid rgba(0,180,255,0.2);animation:ring-p 2.4s ease-in-out infinite;"></div>
+        <div style="width:80px;height:80px;border-radius:50%;border:1.5px solid rgba(0,180,255,0.35);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;">
+          <div class="scan"></div>
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00B4FF" stroke-width="1.5" stroke-linecap="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+      </div>
+
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.18em;color:rgba(0,180,255,.65);text-transform:uppercase;margin-bottom:10px;">Protocolo de Verificação</div>
+        <h1 style="font-size:clamp(26px,8vw,38px);font-weight:900;line-height:1.18;margin-bottom:13px;">
+          Descubra se o <span style="color:#00B4FF;text-shadow:0 0 18px rgba(0,180,255,.5);">NAIA</span><br>é pra você
+        </h1>
+        <p style="font-size:14px;color:var(--muted);line-height:1.65;max-width:320px;margin:0 auto;">
+          Vamos entender o seu perfil em 5 passos rápidos — e te explicar como o sistema funciona no caminho.
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;">
+        <div style="background:var(--glass);border:1px solid var(--gb);border-radius:12px;padding:13px 8px;text-align:center;">
+          <div style="font-size:16px;font-weight:800;color:#00FF94;margin-bottom:3px;">91.2%</div>
+          <div style="font-size:10px;color:var(--muted);">Acerto</div>
+        </div>
+        <div style="background:var(--glass);border:1px solid var(--gb);border-radius:12px;padding:13px 8px;text-align:center;">
+          <div style="font-size:16px;font-weight:800;color:#00B4FF;margin-bottom:3px;">≤94ms</div>
+          <div style="font-size:10px;color:var(--muted);">Velocidade</div>
+        </div>
+        <div style="background:var(--glass);border:1px solid var(--gb);border-radius:12px;padding:13px 8px;text-align:center;">
+          <div style="font-size:16px;font-weight:800;margin-bottom:3px;">24k+</div>
+          <div style="font-size:10px;color:var(--muted);">Trades</div>
+        </div>
+      </div>
+
+      <div style="width:100%;">
+        <button class="btn-blue" onclick="goStep(1)">
+          COMEÇAR VERIFICAÇÃO
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <p style="font-size:11px;color:rgba(255,255,255,.22);text-align:center;margin-top:9px;">Menos de 2 minutos · Sem cadastro</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 1 — NOME ══════════ -->
+  <div id="s1" class="scr">
+    <div class="inner">
+
+      <div class="exp-card stg">
+        <div class="exp-tag">O que é o NAIA</div>
+        <p>
+          O <strong>NAIA</strong> é um bot de trading com inteligência artificial que opera memecoins automaticamente na Solana.
+          Enquanto você trabalha, dorme ou vive sua vida, ele fica de olho no mercado e executa as operações por você.
+          <strong>Sem precisar de nenhum conhecimento técnico.</strong>
+        </p>
+      </div>
+
+      <div class="stg" style="transition-delay:.08s;">
+        <div class="form-label">Qual é o seu nome?</div>
+        <div class="form-sub">Pra gente conseguir te atender de forma personalizada.</div>
+        <input
+          id="f-nome"
+          class="txt-input"
+          type="text"
+          placeholder="Seu primeiro nome"
+          autocomplete="given-name"
+          oninput="checkStep1()"
+        />
+      </div>
+
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn1" class="btn-blue" onclick="goStep(2)" disabled>
+          CONTINUAR
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 2 — EXPERIÊNCIA ══════════ -->
+  <div id="s2" class="scr">
+    <div class="inner">
+
+      <div class="exp-card stg">
+        <div class="exp-tag">Como o NAIA opera</div>
+        <p>
+          O sistema tem um <strong>Scanner</strong> que monitora milhares de tokens ao mesmo tempo.
+          Quando detecta uma oportunidade, o <strong>Sniper</strong> entra na operação em menos de 94ms —
+          antes da maioria do mercado perceber o movimento.
+        </p>
+        <div class="exp-stat">
+          <div class="exp-stat-item"><div class="val" style="color:#00FF94;">97%</div><div class="lbl">Cobertura de pares</div></div>
+          <div class="exp-stat-item"><div class="val" style="color:#00B4FF;">≤94ms</div><div class="lbl">Velocidade de entrada</div></div>
+          <div class="exp-stat-item"><div class="val" style="color:#fff;">12x</div><div class="lbl">Mais rápido que o mercado</div></div>
+        </div>
+      </div>
+
+      <div class="stg" style="transition-delay:.08s;">
+        <div class="form-label">Você já operou cripto antes?</div>
+        <div class="form-sub">Não tem resposta certa — é só pra entendermos seu nível.</div>
+        <div class="opts" id="opts2">
+          <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Nunca operei cripto')"><span class="opt-dot"></span>Nunca operei cripto</button>
+          <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Comprei e vendi algumas vezes')"><span class="opt-dot"></span>Comprei e vendi algumas vezes</button>
+          <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Opero regularmente')"><span class="opt-dot"></span>Opero regularmente</button>
+          <button class="opt" onclick="pickOpt('opts2',this,'experiencia','Já uso bots ou automação')"><span class="opt-dot"></span>Já uso bots ou automação</button>
+        </div>
+      </div>
+
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn2" class="btn-blue" onclick="goStep(3)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 3 — OBJETIVO ══════════ -->
+  <div id="s3" class="scr">
+    <div class="inner">
+
+      <div class="exp-card stg">
+        <div class="exp-tag">Os resultados</div>
+        <p>
+          O NAIA fecha operações com <strong>91.2% de acerto</strong> e risco/retorno médio de <strong>1:2.8</strong>.
+          Isso significa que, em média, cada R$ 1 de risco pode gerar R$ 2,80 de retorno.
+          Os lucros vão <strong>direto pra sua carteira</strong> — sem nenhum intermediário no meio.
+        </p>
+        <div class="exp-stat">
+          <div class="exp-stat-item"><div class="val" style="color:#00FF94;">91.2%</div><div class="lbl">Taxa de acerto</div></div>
+          <div class="exp-stat-item"><div class="val" style="color:#00B4FF;">1:2.8</div><div class="lbl">Risco / Retorno</div></div>
+          <div class="exp-stat-item"><div class="val" style="color:#fff;">≤3%</div><div class="lbl">Drawdown máximo</div></div>
+        </div>
+      </div>
+
+      <div class="stg" style="transition-delay:.08s;">
+        <div class="form-label">Qual é o seu principal objetivo?</div>
+        <div class="form-sub">O que te trouxe até aqui?</div>
+        <div class="opts" id="opts3">
+          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Renda passiva sem precisar operar')"><span class="opt-dot"></span>Renda passiva sem precisar operar</button>
+          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Maximizar o retorno do meu capital')"><span class="opt-dot"></span>Maximizar o retorno do meu capital</button>
+          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Aprender sobre cripto e automação')"><span class="opt-dot"></span>Aprender sobre cripto e automação</button>
+          <button class="opt" onclick="pickOpt('opts3',this,'objetivo','Escalar capital de forma consistente')"><span class="opt-dot"></span>Escalar capital de forma consistente</button>
+        </div>
+      </div>
+
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn3" class="btn-blue" onclick="goStep(4)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 4 — CAPITAL ══════════ -->
+  <div id="s4" class="scr">
+    <div class="inner">
+
+      <div class="exp-card stg">
+        <div class="exp-tag">Segurança e controle</div>
+        <p>
+          O NAIA é <strong>100% não-custodial</strong>: você mantém o controle total da sua carteira e das suas chaves.
+          O bot só opera com a sua autorização — e você acompanha cada trade em tempo real pelo painel.
+          <strong>Ninguém tem acesso ao seu dinheiro além de você.</strong>
+        </p>
+      </div>
+
+      <div class="stg" style="transition-delay:.08s;">
+        <div class="form-label">Quanto você tem disponível pra começar?</div>
+        <div class="form-sub">Ajuda a entender o melhor setup pra você.</div>
+        <div class="opts" id="opts4">
+          <button class="opt" onclick="pickOpt('opts4',this,'capital','Ainda não tenho capital separado')"><span class="opt-dot"></span>Ainda não tenho capital separado</button>
+          <button class="opt" onclick="pickOpt('opts4',this,'capital','Menos de 1 SOL')"><span class="opt-dot"></span>Menos de 1 SOL</button>
+          <button class="opt" onclick="pickOpt('opts4',this,'capital','Entre 1 e 5 SOL')"><span class="opt-dot"></span>Entre 1 e 5 SOL</button>
+          <button class="opt" onclick="pickOpt('opts4',this,'capital','Mais de 5 SOL')"><span class="opt-dot"></span>Mais de 5 SOL</button>
+        </div>
+      </div>
+
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn4" class="btn-blue" onclick="goStep(5)" disabled>CONTINUAR <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TELA 5 — CONTATO ══════════ -->
+  <div id="s5" class="scr">
+    <div class="inner">
+
+      <div class="exp-card stg">
+        <div class="exp-tag">Próximo passo</div>
+        <p>
+          Com base no que você respondeu, um especialista vai te atender <strong>pessoalmente</strong>
+          para tirar todas as dúvidas, mostrar o sistema funcionando ao vivo e te ajudar a dar o primeiro passo.
+          <strong>Sem pressão, sem enrolação.</strong>
+        </p>
+      </div>
+
+      <div class="stg" style="transition-delay:.08s;">
+        <div class="form-label">Qual é o seu Instagram?</div>
+        <div class="form-sub">Pra gente te mandar uma DM e marcar o melhor horário.</div>
+        <input
+          id="f-ig"
+          class="txt-input"
+          type="text"
+          placeholder="@seuinstagram"
+          autocomplete="off"
+          oninput="checkStep5()"
+        />
+      </div>
+
+      <div class="stg" style="transition-delay:.14s;">
+        <button id="btn5" class="btn-blue" onclick="goFinal()" disabled>
+          VER MEU PERFIL
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════ TELA FINAL ══════════ -->
+  <div id="sf" class="scr">
+    <div class="inner" style="align-items:center;">
+
+      <!-- Checkmark -->
+      <div class="stg" style="text-align:center;">
+        <div style="width:68px;height:68px;border-radius:50%;background:rgba(0,255,148,.1);border:1.5px solid rgba(0,255,148,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#00FF94" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:.16em;color:#00FF94;text-transform:uppercase;margin-bottom:8px;">Perfil Montado</div>
+        <h2 style="font-size:clamp(22px,6.5vw,30px);font-weight:900;line-height:1.25;">
+          Tudo certo, <span id="final-nome" style="color:#00B4FF;text-shadow:0 0 16px rgba(0,180,255,.4);">...</span>!
+        </h2>
+        <p style="font-size:13px;color:var(--muted);margin-top:8px;line-height:1.6;">Seu perfil está pronto. Um especialista vai te chamar no Instagram.</p>
+      </div>
+
+      <!-- Resumo -->
+      <div class="stg" style="width:100%;transition-delay:.1s;">
+        <div style="background:var(--glass);border:1px solid var(--gb);border-radius:16px;padding:18px 20px;">
+          <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;">Resumo do perfil</div>
+          <div id="summary"></div>
+        </div>
+      </div>
+
+      <!-- Instagram CTA -->
+      <div class="stg" style="width:100%;transition-delay:.18s;">
+        <a id="ig-btn" href="#" target="_blank" rel="noopener" class="btn-ig">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M17.5 6.5h.01" stroke-width="2.5"/>
+          </svg>
+          FALAR COM ESPECIALISTA
+        </a>
+        <p style="text-align:center;margin-top:9px;font-size:11px;color:rgba(255,255,255,.22);">Abre o Instagram direto na conversa</p>
+      </div>
+
+      <p class="stg" style="font-size:10px;color:rgba(255,255,255,.18);text-align:center;line-height:1.65;padding:0 8px;transition-delay:.24s;">
+        Aviso de risco: Trading de criptomoedas envolve alto risco. Resultados passados não garantem resultados futuros. Este produto não constitui aconselhamento financeiro.
+      </p>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+const IG_HANDLE = 'naiaprotocol'; // ← ALTERE PARA O SEU @
+
+const form = { nome:'', experiencia:'', objetivo:'', capital:'', contato:'' };
+let cur = 0;
+
+const STEPS = [null,'s1','s2','s3','s4','s5'];
+const PROG  = [0, 20, 40, 60, 80, 100];
+
+function goStep(n) {
+  const from = n === 1 ? 's0' : STEPS[n-1];
+  const to   = STEPS[n];
+  if (!to) return;
+
+  const fEl = document.getElementById(from);
+  const tEl = document.getElementById(to);
+
+  fEl.classList.add('slide-out');
+  setTimeout(() => {
+    fEl.classList.remove('active','slide-out');
+    tEl.classList.add('active','slide-in');
+    setTimeout(() => tEl.classList.remove('slide-in'), 340);
+    tEl.scrollTop = 0;
+
+    cur = n;
+    document.getElementById('step-now').textContent = n;
+    document.getElementById('prog-fill').style.width = PROG[n] + '%';
+
+    setTimeout(() => {
+      tEl.querySelectorAll('.stg').forEach((el,i) =>
+        setTimeout(() => el.classList.add('vis'), i * 100)
+      );
+    }, 60);
+
+    if (n === 1) {
+      setTimeout(() => document.getElementById('f-nome')?.focus(), 400);
+    }
+  }, 280);
+}
+
+function pickOpt(groupId, btn, field, val) {
+  document.querySelectorAll(`#${groupId} .opt`).forEach(o => o.classList.remove('sel'));
+  btn.classList.add('sel');
+  form[field] = val;
+  const btnId = 'btn' + groupId.replace('opts','');
+  const next = document.getElementById(btnId);
+  if (next) next.disabled = false;
+}
+
+function checkStep1() {
+  const v = document.getElementById('f-nome').value.trim();
+  form.nome = v;
+  document.getElementById('btn1').disabled = v.length < 2;
+}
+
+function checkStep5() {
+  const v = document.getElementById('f-ig').value.trim();
+  form.contato = v;
+  document.getElementById('btn5').disabled = v.length < 3;
+}
+
+function goFinal() {
+  form.nome    = document.getElementById('f-nome').value.trim();
+  form.contato = document.getElementById('f-ig').value.trim();
+
+  // Envio para o Telegram
+  const telegramBotToken = "8607846534:AAHxMCKNINP9xC-2qH34l0uCOrKMYW3oz4k"; 
+  const telegramChatId = "8282567726";
+  
+  const message = `🚨 *NOVA APLICAÇÃO NAIA (NOVO FUNIL)* 🚨\n\n` +
+                  `👤 *Operador:* ${form.nome}\n` +
+                  `📊 *Experiência:* ${form.experiencia}\n` +
+                  `🎯 *Objetivo:* ${form.objetivo}\n` +
+                  `💰 *Capital:* ${form.capital}\n` +
+                  `📱 *Instagram:* ${form.contato}`;
+
+  fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+          chat_id: telegramChatId,
+          text: message,
+          parse_mode: 'Markdown'
+      })
+  }).catch(e => console.error("Erro no Telegram:", e));
+
+  const fEl = document.getElementById('s5');
+  const tEl = document.getElementById('sf');
+
+  fEl.classList.add('slide-out');
+  setTimeout(() => {
+    fEl.classList.remove('active','slide-out');
+    tEl.classList.add('active','slide-in');
+    setTimeout(() => tEl.classList.remove('slide-in'), 340);
+    tEl.scrollTop = 0;
+
+    document.getElementById('step-now').textContent = '5';
+    document.getElementById('prog-fill').style.width = '100%';
+
+    document.getElementById('final-nome').textContent = form.nome;
+
+    const rows = [
+      ['Experiência', form.experiencia],
+      ['Objetivo',    form.objetivo],
+      ['Capital',     form.capital],
+      ['Instagram',   form.contato],
+    ];
+    document.getElementById('summary').innerHTML = rows.map(([k,v]) => `
+      <div class="summary-row">
+        <span class="key">${k}</span>
+        <span class="val">${v || '—'}</span>
+      </div>
+    `).join('');
+
+    const igHandle = form.contato.replace(/^@/,'') || IG_HANDLE;
+    document.getElementById('ig-btn').href = `https://ig.me/m/${IG_HANDLE}`;
+
+    setTimeout(() => {
+      tEl.querySelectorAll('.stg').forEach((el,i) =>
+        setTimeout(() => el.classList.add('vis'), i * 120)
+      );
+    }, 80);
+
+    setTimeout(confetti, 500);
+  }, 280);
+}
+
+function confetti() {
+  const colors = ['#00FF94','#0057FF','#00B4FF','#ffffff','#FFD700'];
+  for (let i = 0; i < 65; i++) {
+    setTimeout(() => {
+      const p = document.createElement('div');
+      p.className = 'cf';
+      const sz = Math.random() * 7 + 4;
+      p.style.cssText = `left:${Math.random()*100}vw;top:-8px;width:${sz}px;height:${sz}px;background:${colors[i%colors.length]};border-radius:${Math.random()>.5?'50%':'2px'};animation-duration:${Math.random()*1.5+1.8}s;animation-delay:${Math.random()*0.5}s;`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 3200);
+    }, i * 22);
+  }
+}
+
+// Particles
+(() => {
+  const cv = document.getElementById('cv');
+  const cx = cv.getContext('2d');
+  let W, H, mx = -999, my = -999;
+  const resize = () => { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; };
+  resize();
+  window.addEventListener('resize', resize);
+  const pts = Array.from({length:50}, () => ({
+    x: Math.random()*window.innerWidth,
+    y: Math.random()*window.innerHeight,
+    vx: (Math.random()-.5)*.22,
+    vy: (Math.random()-.5)*.22,
+    r: Math.random()*1.3+.4,
+    a: Math.random()*.28+.08
+  }));
+  document.addEventListener('mousemove', e=>{mx=e.clientX;my=e.clientY;});
+  document.addEventListener('touchmove', e=>{mx=e.touches[0].clientX;my=e.touches[0].clientY;},{passive:true});
+  (function draw() {
+    cx.clearRect(0,0,W,H);
+    pts.forEach(p => {
+      const dx=mx-p.x, dy=my-p.y, d=Math.hypot(dx,dy);
+      if(d<100){p.vx-=dx/d*.015;p.vy-=dy/d*.015;}
+      p.x=(p.x+p.vx+W)%W; p.y=(p.y+p.vy+H)%H;
+      p.vx*=.992; p.vy*=.992;
+      cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      cx.fillStyle=`rgba(0,180,255,${p.a})`; cx.fill();
+    });
+    for(let i=0;i<pts.length;i++) for(let j=i+1;j<pts.length;j++){
+      const dx=pts[i].x-pts[j].x, dy=pts[i].y-pts[j].y, d=Math.hypot(dx,dy);
+      if(d<85){
+        cx.beginPath(); cx.moveTo(pts[i].x,pts[i].y); cx.lineTo(pts[j].x,pts[j].y);
+        cx.strokeStyle=`rgba(0,87,255,${.1*(1-d/85)})`; cx.lineWidth=.5; cx.stroke();
+      }
+    }
+    requestAnimationFrame(draw);
+  })();
+})();
+</script>
 </body>
 </html>
