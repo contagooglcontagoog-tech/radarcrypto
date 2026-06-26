@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RadarCrypto | Qualificação de Acesso</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fa-solid fa-radar"></i> RADAR<span class="highlight">CRYPTO</span>
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <span class="progress-text" id="progressText">0% Concluído</span>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="content-area" id="contentArea">
+            
+            <!-- STEP 0: INTRO -->
+            <section class="step active" id="step-0">
+                <div class="badge-icon"><i class="fa-solid fa-robot"></i></div>
+                <h1 class="title">Acesso Restrito ao Bot</h1>
+                <p class="subtitle">Bem-vindo(a). Aqui é o Bruno.</p>
+                <div class="card">
+                    <p>Muitos querem acesso à máquina que criamos para operar memecoins 100% no automático na rede Solana. Mas a verdade é que <strong>não liberamos para qualquer um</strong>.</p>
+                    <p>Antes de você colocar as mãos nessa tecnologia e conectar a sua carteira, eu preciso saber se você entende o básico do jogo.</p>
+                    <p>Preparei um treinamento rápido de 3 fases. Se você passar e preencher sua aplicação no final, eu analiso seu perfil.</p>
+                </div>
+                <button class="btn-primary" onclick="nextStep(1)">
+                    INICIAR DESAFIO <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </section>
+
+            <!-- STEP 1: BINANCE -->
+            <section class="step" id="step-1">
+                <div class="badge-icon"><i class="fa-brands fa-bitcoin"></i></div>
+                <h1 class="title">Fase 1: A Corretora</h1>
+                <p class="subtitle">A porta de entrada do capital.</p>
+                <div class="card">
+                    <h3>O que é a Binance?</h3>
+                    <p>A Binance é como se fosse o "banco de câmbio". É lá que você envia seus Reais (BRL) via PIX e troca por criptomoedas, no nosso caso, <strong>SOL (Solana)</strong>.</p>
+                    <p>Nós não operamos dentro da Binance. Ela serve apenas para comprar a moeda e depois enviá-la para a sua carteira pessoal.</p>
+                    <div class="quiz-box">
+                        <p class="quiz-question">Para que usamos a Binance no nosso sistema?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-btn" onclick="checkAnswer(1, false, this)">Para guardar moedas para sempre</button>
+                            <button class="quiz-btn" onclick="checkAnswer(1, true, this)">Apenas para converter Reais em SOL</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary btn-hidden" id="btn-next-1" onclick="nextStep(2)">
+                    AVANÇAR PARA FASE 2 <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </section>
+
+            <!-- STEP 2: TRUST WALLET -->
+            <section class="step" id="step-2">
+                <div class="badge-icon"><i class="fa-solid fa-wallet"></i></div>
+                <h1 class="title">Fase 2: Sua Carteira</h1>
+                <p class="subtitle">Onde o nosso Bot opera.</p>
+                <div class="card">
+                    <h3>A Trust Wallet</h3>
+                    <p>No mercado de cripto, "quem tem as chaves, tem o dinheiro". A <strong>Trust Wallet</strong> é uma carteira descentralizada (DeFi).</p>
+                    <p>Você envia as moedas SOL da Binance para a Trust Wallet. É nela que você vai conectar o nosso Bot de IA. Todo lucro das operações cai diretamente na sua Trust Wallet, sem passar pela nossa mão.</p>
+                    <div class="quiz-box">
+                        <p class="quiz-question">Quem tem acesso ao saldo que está na sua Trust Wallet?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-btn" onclick="checkAnswer(2, true, this)">Apenas eu (dono das chaves)</button>
+                            <button class="quiz-btn" onclick="checkAnswer(2, false, this)">O Bruno e a equipe do Bot</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary btn-hidden" id="btn-next-2" onclick="nextStep(3)">
+                    AVANÇAR PARA FASE 3 <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </section>
+
+            <!-- STEP 3: SOLANA -->
+            <section class="step" id="step-3">
+                <div class="badge-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h1 class="title">Fase 3: A Rede Solana</h1>
+                <p class="subtitle">Velocidade e Memecoins.</p>
+                <div class="card">
+                    <h3>Por que Solana?</h3>
+                    <p>O nosso Bot não opera Bitcoin ou Ethereum. Ele caça oportunidades em <strong>memecoins na rede Solana</strong> (usando contratos inteligentes).</p>
+                    <p>A Solana é escolhida por ser extremamente rápida e ter taxas de centavos. Isso permite que a IA faça dezenas de micro-operações (compras e vendas) em questão de segundos antes de todo mundo.</p>
+                    <div class="quiz-box">
+                        <p class="quiz-question">Por que o bot usa a rede Solana?</p>
+                        <div class="quiz-options">
+                            <button class="quiz-btn" onclick="checkAnswer(3, false, this)">Porque é mais lenta e segura</button>
+                            <button class="quiz-btn" onclick="checkAnswer(3, true, this)">Porque é muito rápida e tem taxas baixíssimas</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary btn-hidden" id="btn-next-3" onclick="nextStep(4)">
+                    IR PARA APLICAÇÃO FINAL <i class="fa-solid fa-check"></i>
+                </button>
+            </section>
+
+            <!-- STEP 4: FORMULÁRIO -->
+            <section class="step" id="step-4">
+                <div class="badge-icon glow-green"><i class="fa-solid fa-id-card"></i></div>
+                <h1 class="title">Análise de Perfil</h1>
+                <p class="subtitle">Você passou no teste básico. Preencha seus dados para avaliação.</p>
+                
+                <form id="qualificationForm" class="qualification-form">
+                    <div class="form-group">
+                        <label for="name">Nome Completo</label>
+                        <input type="text" id="name" required placeholder="Digite seu nome">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="whatsapp">WhatsApp (com DDD)</label>
+                        <input type="tel" id="whatsapp" required placeholder="Ex: 11999999999">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="experience">Seu nível de experiência com Cripto</label>
+                        <select id="experience" required>
+                            <option value="">Selecione...</option>
+                            <option value="iniciante">Nenhuma (Estou começando agora)</option>
+                            <option value="intermediario">Já comprei moedas em corretora</option>
+                            <option value="avancado">Já uso Trust Wallet / DeFi / Solana</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="motivation">Por que você merece uma vaga para usar o bot?</label>
+                        <textarea id="motivation" rows="4" required placeholder="Seja sincero..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">
+                        ENVIAR PARA ANÁLISE <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- STEP 5: SUCESSO -->
+            <section class="step" id="step-5">
+                <div class="badge-icon glow-green success-animation"><i class="fa-solid fa-circle-check"></i></div>
+                <h1 class="title">Aplicação Recebida!</h1>
+                <p class="subtitle">Seus dados estão sob análise.</p>
+                <div class="card text-center">
+                    <p>Obrigado pelo seu tempo.</p>
+                    <p>O <strong>Professor Rafael</strong> ou a <strong>Amanda</strong> (nossa equipe de suporte) entrarão em contato no WhatsApp informado caso você seja aprovado para testar o sistema.</p>
+                    <p class="highlight mt-4">Fique atento ao seu WhatsApp!</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
