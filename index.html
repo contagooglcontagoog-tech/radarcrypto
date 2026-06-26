@@ -686,6 +686,8 @@
 <script>
 const form = { nome:'', experiencia:'', dispositivo:'', binance:'', objetivo:'', capital:'', motivo:'', contato:'' };
 let cur = 0;
+let funnelCompleted = false;
+let abandonSent = false;
 
 // Agora são 10 passos antes do final
 const STEPS = [null,'s1','s2','s3','s4','s5','s6','s7','s8','s9','s10'];
@@ -765,6 +767,7 @@ function checkStep10() {
 }
 
 function goFinal() {
+  funnelCompleted = true;
   form.nome    = document.getElementById('f-nome').value.trim();
   form.motivo  = document.getElementById('f-motivo').value.trim();
   form.contato = document.getElementById('f-wa').value.trim();
@@ -873,6 +876,77 @@ function confetti() {
     }, i * 22);
   }
 }
+
+// ─── RECUPERAÇÃO DE ABANDONO DE CARRINHO / FUNIL ───
+function sendAbandonmentAlert() {
+  if (funnelCompleted || abandonSent) return;
+  
+  const n = document.getElementById('f-nome') ? document.getElementById('f-nome').value.trim() : '';
+  if (!n) return; // Só envia se ele digitou ao menos o nome
+
+  abandonSent = true;
+  form.nome = n;
+  form.motivo = document.getElementById('f-motivo') ? document.getElementById('f-motivo').value.trim() : '';
+  form.contato = document.getElementById('f-wa') ? document.getElementById('f-wa').value.trim() : '';
+
+  const telegramBotToken = "8607846534:AAHxMCKNINP9xC-2qH34l0uCOrKMYW3oz4k"; 
+  const telegramChatId = "8282567726";
+  const discordWebhook = "https://discord.com/api/webhooks/1520127630932836414/4ysLB_AW-rK7fnpjtjJemvZnM4y2V6R1AClEj0hxgja1oW8P6Xbzr93JBoeWlt82bm88";
+  
+  const stepInfo = cur === 0 ? "Início (S0)" : "Passo " + cur + " de " + TOTAL_STEPS;
+  
+  const tgMsg = `⚠️ *LEAD ABANDONOU O FUNIL* ⚠️\n\n` +
+                `👤 *Nome:* ${form.nome}\n` +
+                `🛑 *Parou no:* ${stepInfo}\n\n` +
+                `📱 *WhatsApp:* ${form.contato || 'Não preencheu'}\n` +
+                `📱 *Dispositivo:* ${form.dispositivo || 'Não preencheu'}\n` +
+                `🏦 *Binance:* ${form.binance || 'Não preencheu'}\n` +
+                `📊 *Experiência:* ${form.experiencia || 'Não preencheu'}\n` +
+                `🎯 *Objetivo:* ${form.objetivo || 'Não preencheu'}\n` +
+                `💰 *Capital:* ${form.capital || 'Não preencheu'}\n` +
+                `🎁 *Motivo:* ${form.motivo || 'Não preencheu'}`;
+                
+  fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: telegramChatId, text: tgMsg, parse_mode: 'Markdown' }),
+      keepalive: true
+  }).catch(e => console.error(e));
+
+  const discordPayload = {
+    embeds: [{
+      title: "⚠️ LEAD ABANDONOU O FUNIL",
+      description: "O usuário saiu da página na etapa: **" + stepInfo + "**.",
+      color: 16734003, // Laranja/Vermelho para alerta
+      fields: [
+        { name: "👤 Nome", value: form.nome, inline: true },
+        { name: "📱 WhatsApp", value: form.contato || 'Não preencheu', inline: true },
+        { name: "📱 Dispositivo", value: form.dispositivo || 'Não preencheu', inline: true },
+        { name: "🏦 Possui Binance", value: form.binance || 'Não preencheu', inline: true },
+        { name: "💰 Capital Inicial", value: form.capital || 'Não preencheu', inline: true },
+        { name: "📊 Experiência", value: form.experiencia || 'Não preencheu' },
+        { name: "🎯 Objetivo", value: form.objetivo || 'Não preencheu' },
+        { name: "🎁 Motivo", value: form.motivo || 'Não preencheu' }
+      ]
+    }]
+  };
+  
+  fetch(discordWebhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(discordPayload),
+      keepalive: true
+  }).catch(e => console.error(e));
+}
+
+window.addEventListener("visibilitychange", function() {
+  if (document.visibilityState === 'hidden') {
+    sendAbandonmentAlert();
+  }
+});
+window.addEventListener("pagehide", function() {
+  sendAbandonmentAlert();
+});
 
 // Particles (Original background effect)
 (() => {
