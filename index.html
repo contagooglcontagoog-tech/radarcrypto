@@ -3,162 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RadarCrypto | Qualificação de Acesso</title>
+    <title>NAIA — Protocol Initiation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="background-effects">
-        <div class="glow-orb orb-1"></div>
-        <div class="glow-orb orb-2"></div>
-    </div>
+    
+    <nav>
+        <div class="nav-logo">NAIA<span style="font-weight: 300; opacity: 0.7; font-size: 1rem; margin-left: 10px;">NEURAL AI SCALPER</span></div>
+        <div class="nav-status">
+            <div class="live-dot"></div>
+            SYSTEM ONLINE
+        </div>
+    </nav>
 
     <div class="app-container">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">
-                <i class="fa-solid fa-radar"></i> RADAR<span class="highlight">CRYPTO</span>
+        
+        <div class="progress-wrapper">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
-            <div class="progress-container">
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill"></div>
-                </div>
-                <span class="progress-text" id="progressText">0% Concluído</span>
-            </div>
-        </header>
+            <div class="progress-text" id="progressText">CLEARANCE: 0%</div>
+        </div>
 
-        <!-- Main Content Area -->
         <main class="content-area" id="contentArea">
             
             <!-- STEP 0: INTRO -->
             <section class="step active" id="step-0">
-                <div class="badge-icon"><i class="fa-solid fa-robot"></i></div>
-                <h1 class="title">Acesso Restrito ao Bot</h1>
-                <p class="subtitle">Bem-vindo(a). Aqui é o Bruno.</p>
+                <div class="step-eyebrow">
+                    <div class="line"></div>
+                    PROTOCOL INITIATION
+                </div>
+                <h1 class="title">Restricted <em>Access</em></h1>
                 <div class="card">
-                    <p>Muitos querem acesso à máquina que criamos para operar memecoins 100% no automático na rede Solana. Mas a verdade é que <strong>não liberamos para qualquer um</strong>.</p>
-                    <p>Antes de você colocar as mãos nessa tecnologia e conectar a sua carteira, eu preciso saber se você entende o básico do jogo.</p>
-                    <p>Preparei um treinamento rápido de 3 fases. Se você passar e preencher sua aplicação no final, eu analiso seu perfil.</p>
+                    <p>O <strong>Neural AI Scalper (NAIA)</strong> não é um utilitário público. É uma infraestrutura de grau institucional desenvolvida para arbitragem on-chain de memecoins na rede Solana.</p>
+                    <p>Muitos buscam acesso à nossa máquina de execução automática. No entanto, a capacidade de implantação é limitada e restrita a operadores que compreendem a arquitetura fundamental do sistema.</p>
+                    <p>Antes de autorizarmos a conexão da sua carteira, você deve passar pelo protocolo de verificação estrutural (3 módulos). Prossiga com atenção.</p>
                 </div>
                 <button class="btn-primary" onclick="nextStep(1)">
-                    INICIAR DESAFIO <i class="fa-solid fa-arrow-right"></i>
+                    INICIAR PROTOCOLO
                 </button>
             </section>
 
             <!-- STEP 1: BINANCE -->
             <section class="step" id="step-1">
-                <div class="badge-icon"><i class="fa-brands fa-bitcoin"></i></div>
-                <h1 class="title">Fase 1: A Corretora</h1>
-                <p class="subtitle">A porta de entrada do capital.</p>
+                <div class="step-eyebrow">
+                    <div class="line"></div>
+                    MODULE I
+                </div>
+                <h1 class="title">Capital <em>Entry</em></h1>
                 <div class="card">
-                    <h3>O que é a Binance?</h3>
-                    <p>A Binance é como se fosse o "banco de câmbio". É lá que você envia seus Reais (BRL) via PIX e troca por criptomoedas, no nosso caso, <strong>SOL (Solana)</strong>.</p>
-                    <p>Nós não operamos dentro da Binance. Ela serve apenas para comprar a moeda e depois enviá-la para a sua carteira pessoal.</p>
+                    <h3>A Função da Corretora</h3>
+                    <p>O sistema requer liquidez bruta. Utilizamos plataformas centralizadas, como a <strong>Binance</strong>, exclusivamente como ponte (fiat on-ramp). É onde o capital BRL é convertido em SOL.</p>
+                    <p>O NAIA <strong>não opera</strong> dentro da Binance. O capital deve ser imediatamente extraído para um ambiente descentralizado após a conversão.</p>
+                    
                     <div class="quiz-box">
-                        <p class="quiz-question">Para que usamos a Binance no nosso sistema?</p>
+                        <p class="quiz-question">Qual é o papel da Binance na infraestrutura do NAIA?</p>
                         <div class="quiz-options">
-                            <button class="quiz-btn" onclick="checkAnswer(1, false, this)">Para guardar moedas para sempre</button>
-                            <button class="quiz-btn" onclick="checkAnswer(1, true, this)">Apenas para converter Reais em SOL</button>
+                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(1, false, this)">Armazenar os lucros do robô a longo prazo.</button>
+                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(1, true, this)">Atuar apenas como ponte para converter moeda fiduciária em SOL.</button>
                         </div>
                     </div>
                 </div>
                 <button class="btn-primary btn-hidden" id="btn-next-1" onclick="nextStep(2)">
-                    AVANÇAR PARA FASE 2 <i class="fa-solid fa-arrow-right"></i>
+                    PROSSEGUIR PARA MODULE II
                 </button>
             </section>
 
             <!-- STEP 2: TRUST WALLET -->
             <section class="step" id="step-2">
-                <div class="badge-icon"><i class="fa-solid fa-wallet"></i></div>
-                <h1 class="title">Fase 2: Sua Carteira</h1>
-                <p class="subtitle">Onde o nosso Bot opera.</p>
+                <div class="step-eyebrow">
+                    <div class="line"></div>
+                    MODULE II
+                </div>
+                <h1 class="title">Sovereign <em>Custody</em></h1>
                 <div class="card">
-                    <h3>A Trust Wallet</h3>
-                    <p>No mercado de cripto, "quem tem as chaves, tem o dinheiro". A <strong>Trust Wallet</strong> é uma carteira descentralizada (DeFi).</p>
-                    <p>Você envia as moedas SOL da Binance para a Trust Wallet. É nela que você vai conectar o nosso Bot de IA. Todo lucro das operações cai diretamente na sua Trust Wallet, sem passar pela nossa mão.</p>
+                    <h3>Autocustódia Absoluta</h3>
+                    <p>O NAIA opera em um modelo estritamente não-custodial (DeFi). A execução algorítmica ocorre on-chain, e você mantém controle absoluto de suas chaves privadas através da <strong>Trust Wallet</strong>.</p>
+                    <p>O bot conecta-se à sua carteira via smart contracts. Todo o lucro das operações de scalping é roteado e liquidado diretamente no seu saldo local, sem intermediários humanos.</p>
+                    
                     <div class="quiz-box">
-                        <p class="quiz-question">Quem tem acesso ao saldo que está na sua Trust Wallet?</p>
+                        <p class="quiz-question">Onde os lucros das operações do bot são armazenados?</p>
                         <div class="quiz-options">
-                            <button class="quiz-btn" onclick="checkAnswer(2, true, this)">Apenas eu (dono das chaves)</button>
-                            <button class="quiz-btn" onclick="checkAnswer(2, false, this)">O Bruno e a equipe do Bot</button>
+                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(2, true, this)">Diretamente na minha Trust Wallet, sob meu controle.</button>
+                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(2, false, this)">Na conta da equipe de desenvolvimento do NAIA.</button>
                         </div>
                     </div>
                 </div>
                 <button class="btn-primary btn-hidden" id="btn-next-2" onclick="nextStep(3)">
-                    AVANÇAR PARA FASE 3 <i class="fa-solid fa-arrow-right"></i>
+                    PROSSEGUIR PARA MODULE III
                 </button>
             </section>
 
             <!-- STEP 3: SOLANA -->
             <section class="step" id="step-3">
-                <div class="badge-icon"><i class="fa-solid fa-bolt"></i></div>
-                <h1 class="title">Fase 3: A Rede Solana</h1>
-                <p class="subtitle">Velocidade e Memecoins.</p>
+                <div class="step-eyebrow">
+                    <div class="line"></div>
+                    MODULE III
+                </div>
+                <h1 class="title">Network <em>Infrastructure</em></h1>
                 <div class="card">
-                    <h3>Por que Solana?</h3>
-                    <p>O nosso Bot não opera Bitcoin ou Ethereum. Ele caça oportunidades em <strong>memecoins na rede Solana</strong> (usando contratos inteligentes).</p>
-                    <p>A Solana é escolhida por ser extremamente rápida e ter taxas de centavos. Isso permite que a IA faça dezenas de micro-operações (compras e vendas) em questão de segundos antes de todo mundo.</p>
+                    <h3>Velocidade e Execução</h3>
+                    <p>No mercado de memecoins, milissegundos definem o lucro. O NAIA não opera em Bitcoin ou Ethereum devido ao gargalo de rede.</p>
+                    <p>Nossa arquitetura roda sobre a blockchain da <strong>Solana</strong>. A finalidade de blocos em frações de segundos e taxas microscópicas permitem que o bot faça front-running e execute micro-arbitragens centenas de vezes por hora com eficiência máxima.</p>
+                    
                     <div class="quiz-box">
-                        <p class="quiz-question">Por que o bot usa a rede Solana?</p>
+                        <p class="quiz-question">Por que a infraestrutura do NAIA é baseada na Solana?</p>
                         <div class="quiz-options">
-                            <button class="quiz-btn" onclick="checkAnswer(3, false, this)">Porque é mais lenta e segura</button>
-                            <button class="quiz-btn" onclick="checkAnswer(3, true, this)">Porque é muito rápida e tem taxas baixíssimas</button>
+                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(3, false, this)">Por ser a rede mais antiga e tradicional do mercado.</button>
+                            <button class="btn-ghost quiz-btn" onclick="checkAnswer(3, true, this)">Para explorar a altíssima velocidade de transação e taxas mínimas.</button>
                         </div>
                     </div>
                 </div>
                 <button class="btn-primary btn-hidden" id="btn-next-3" onclick="nextStep(4)">
-                    IR PARA APLICAÇÃO FINAL <i class="fa-solid fa-check"></i>
+                    SOLICITAR CLEARANCE FINAL
                 </button>
             </section>
 
             <!-- STEP 4: FORMULÁRIO -->
             <section class="step" id="step-4">
-                <div class="badge-icon glow-green"><i class="fa-solid fa-id-card"></i></div>
-                <h1 class="title">Análise de Perfil</h1>
-                <p class="subtitle">Você passou no teste básico. Preencha seus dados para avaliação.</p>
+                <div class="step-eyebrow">
+                    <div class="line"></div>
+                    FINAL CLEARANCE
+                </div>
+                <h1 class="title">Profile <em>Analysis</em></h1>
+                <div class="card">
+                    <p>Sua compreensão estrutural foi validada. Preencha o formulário de requisição de acesso. Nossa equipe de operações analisará a viabilidade de alocar recursos para o seu nó.</p>
                 
-                <form id="qualificationForm" class="qualification-form">
-                    <div class="form-group">
-                        <label for="name">Nome Completo</label>
-                        <input type="text" id="name" required placeholder="Digite seu nome">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="whatsapp">WhatsApp (com DDD)</label>
-                        <input type="tel" id="whatsapp" required placeholder="Ex: 11999999999">
-                    </div>
+                    <form id="qualificationForm" class="qualification-form">
+                        <div class="form-group">
+                            <label>OPERATOR NAME</label>
+                            <input type="text" id="name" required placeholder="Nome completo">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>CONTACT NODE (WHATSAPP)</label>
+                            <input type="tel" id="whatsapp" required placeholder="Ex: 11999999999">
+                        </div>
 
-                    <div class="form-group">
-                        <label for="experience">Seu nível de experiência com Cripto</label>
-                        <select id="experience" required>
-                            <option value="">Selecione...</option>
-                            <option value="iniciante">Nenhuma (Estou começando agora)</option>
-                            <option value="intermediario">Já comprei moedas em corretora</option>
-                            <option value="avancado">Já uso Trust Wallet / DeFi / Solana</option>
-                        </select>
-                    </div>
+                        <div class="form-group">
+                            <label>ON-CHAIN EXPERIENCE</label>
+                            <select id="experience" required>
+                                <option value="">Select clearance level...</option>
+                                <option value="iniciante">Level 1 - Nenhum contato prévio</option>
+                                <option value="intermediario">Level 2 - Operações básicas em corretoras</option>
+                                <option value="avancado">Level 3 - Autocustódia (Trust Wallet/Phantom)</option>
+                            </select>
+                        </div>
 
-                    <div class="form-group">
-                        <label for="motivation">Por que você merece uma vaga para usar o bot?</label>
-                        <textarea id="motivation" rows="4" required placeholder="Seja sincero..."></textarea>
-                    </div>
+                        <div class="form-group">
+                            <label>AUTHORIZATION RATIONALE</label>
+                            <textarea id="motivation" rows="3" required placeholder="Por que o protocolo NAIA deve liberar o acesso ao seu nó?"></textarea>
+                        </div>
 
-                    <button type="submit" class="btn-primary">
-                        ENVIAR PARA ANÁLISE <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </form>
+                        <button type="submit" class="btn-primary" style="width: 100%; margin-top: 20px;">
+                            SUBMIT CLEARANCE REQUEST
+                        </button>
+                    </form>
+                </div>
             </section>
 
             <!-- STEP 5: SUCESSO -->
             <section class="step" id="step-5">
-                <div class="badge-icon glow-green success-animation"><i class="fa-solid fa-circle-check"></i></div>
-                <h1 class="title">Aplicação Recebida!</h1>
-                <p class="subtitle">Seus dados estão sob análise.</p>
-                <div class="card text-center">
-                    <p>Obrigado pelo seu tempo.</p>
-                    <p>O <strong>Professor Rafael</strong> ou a <strong>Amanda</strong> (nossa equipe de suporte) entrarão em contato no WhatsApp informado caso você seja aprovado para testar o sistema.</p>
-                    <p class="highlight mt-4">Fique atento ao seu WhatsApp!</p>
+                <div class="step-eyebrow" style="color: var(--green);">
+                    <div class="line" style="background: var(--green);"></div>
+                    REQUEST RECEIVED
+                </div>
+                <h1 class="title" style="color: var(--text);">Status: <em style="color: var(--gold);">Pending Validation</em></h1>
+                <div class="card" style="text-align: center; padding: 60px 40px;">
+                    <div class="status-icon" style="margin-bottom: 24px;">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <p>Sua solicitação foi injetada no sistema.</p>
+                    <p style="margin-top: 20px;">O <strong>Professor Rafael</strong> ou a <strong>Amanda</strong> do suporte operacional da NAIA farão a análise técnica. Caso sua chave de acesso seja aprovada, você receberá instruções diretas pelo canal fornecido (WhatsApp).</p>
+                    <p style="margin-top: 30px; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase;">Mantenha suas comunicações abertas.</p>
                 </div>
             </section>
 
