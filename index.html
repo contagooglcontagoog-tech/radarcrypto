@@ -793,6 +793,33 @@ function goFinal() {
       })
   }).catch(e => console.error("Erro no Telegram:", e));
 
+  // ENVIO PARA O DISCORD
+  const discordWebhook = "https://discord.com/api/webhooks/1520127630932836414/4ysLB_AW-rK7fnpjtjJemvZnM4y2V6R1AClEj0hxgja1oW8P6Xbzr93JBoeWlt82bm88";
+  
+  const discordPayload = {
+    embeds: [{
+      title: "🚨 NOVA APLICAÇÃO NAIA RECEBIDA",
+      color: 65463, // Cor verde neon aproximada
+      fields: [
+        { name: "👤 Operador", value: form.nome, inline: true },
+        { name: "📱 WhatsApp", value: form.contato, inline: true },
+        { name: "📱 Dispositivo", value: form.dispositivo, inline: true },
+        { name: "🎁 Defesa / Motivo (Acesso Free)", value: `"${form.motivo}"` },
+        { name: "🏦 Possui Binance", value: form.binance, inline: true },
+        { name: "💰 Capital Inicial", value: form.capital, inline: true },
+        { name: "📊 Experiência Prévia", value: form.experiencia },
+        { name: "🎯 Objetivo", value: form.objetivo }
+      ],
+      timestamp: new Date().toISOString()
+    }]
+  };
+
+  fetch(discordWebhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(discordPayload)
+  }).catch(e => console.error("Erro no Discord:", e));
+
   // TRANSIÇÃO DE TELA
   const fEl = document.getElementById('s10');
   const tEl = document.getElementById('sf');
